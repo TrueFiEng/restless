@@ -1,6 +1,17 @@
 {
-  "name": "express-rest-utils",
+  "name": "restless",
   "version": "0.1.0",
+  "description": "Build straightforward rest apis",
+  "keywords": [
+    "express",
+    "rest",
+    "api",
+    "validation",
+    "async",
+    "javascript",
+    "typescript",
+    "library"
+  ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
