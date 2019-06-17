@@ -2,6 +2,10 @@
 
 Express.js api, validations and more.
 
+1. Easy to write and read
+2. Declarative
+3. Type safe
+
 ```javascript
 import express from 'express'
 import { asyncHandler, responseOf, sanitize, asString } from 'restless'
