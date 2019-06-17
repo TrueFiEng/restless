@@ -1,7 +1,7 @@
 {
   "name": "restless",
   "version": "0.1.0",
-  "description": "Build straightforward rest apis",
+  "description": "Express.js api, validations and more",
   "keywords": [
     "express",
     "rest",

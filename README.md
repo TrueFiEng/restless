@@ -1,21 +1,26 @@
 # Restless
 
-Build straightforward rest apis.
+Express.js api, validations and more.
 
 ```javascript
 import express from 'express'
-import bodyParser from 'body-parser'
 import { asyncHandler, responseOf, sanitize, asString } from 'restless'
 
 const app = express()
-app.use(bodyParser.json())
-
-app.get('/users/:name', asyncHandler(
-  // Check and sanitize incoming data
-  sanitize({ name: asString }),
-  // Type inference for input data. `name` is known to be a string
-  ({ name }) => responseOf('Hello ' + name)
+app.get('/add/:a/:b', asyncHandler(
+  sanitize({
+    a: asNumber,
+    b: asNumber
+  }),
+  ({ a, b }) => responseOf(a + b)
 ))
+```
+
+Later:
+
+```
+GET /add/1/2 -> 200: 3
+GET /add/foo/2 -> 400: { path: 'params.a', expected: 'number' }
 ```
 
 ## Api
