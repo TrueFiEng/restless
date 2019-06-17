@@ -1,2 +1,7 @@
 export { asyncHandler } from './asyncHandler'
 export { responseOf } from './response'
+export { Either, Sanitizer, SanitizerError } from './sanitize/sanitizer'
+export { sanitize } from './sanitize/sanitize'
+export { asString } from './sanitize/asString'
+export { asNumber } from './sanitize/asNumber'
+export { asObject } from './sanitize/asObject'

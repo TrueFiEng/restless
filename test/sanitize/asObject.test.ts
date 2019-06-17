@@ -21,12 +21,12 @@ describe('asObject', () => {
 
   it('sanitizes using nested sanitizers', async () => {
     const asMyObject = asObject({
+      foo: asNumber,
       bar: asObject({
         baz: asString
-      }),
-      foo: asNumber
+      })
     })
-    const value = { bar: { baz: 'baz' }, foo: 123 }
+    const value = { foo: 123, bar: { baz: 'baz' } }
     const result = asMyObject(value, 'path')
     expect(result).to.deep.equal(Either.right(value))
   })
@@ -39,16 +39,16 @@ describe('asObject', () => {
 
   it('returns errors from nested sanitizers', async () => {
     const asMyObject = asObject({
+      foo: asNumber,
       bar: asObject({
         baz: asString
-      }),
-      foo: asNumber
+      })
     })
-    const value = { bar: {}, foo: false }
+    const value = { foo: false, bar: {} }
     const result = asMyObject(value, 'path')
     expect(result).to.deep.equal(Either.left([
-      { path: 'path.bar.baz', expected: 'string' },
-      { path: 'path.foo', expected: 'number' }
+      { path: 'path.foo', expected: 'number' },
+      { path: 'path.bar.baz', expected: 'string' }
     ]))
   })
 })
