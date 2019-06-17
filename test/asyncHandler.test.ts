@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express from 'express'
-import { responseOf } from '../src/response'
 import { asyncHandler } from '../src/asyncHandler'
+import { responseOf } from '../src/response'
 
 chai.use(chaiHttp)
 
@@ -10,7 +10,7 @@ describe('asyncHandler', () => {
   it('accepts a function that transforms a request into a response', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      req => responseOf({ foo: req.params.foo }, 404)
+      (req) => responseOf({ foo: req.params.foo }, 404)
     ))
 
     const response = await chai.request(app)
@@ -24,9 +24,9 @@ describe('asyncHandler', () => {
   it('accepts multiple functions that connect as a pipe', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      req => req.params.foo as string,
-      foo => parseInt(foo),
-      value => responseOf(value)
+      (req) => req.params.foo as string,
+      (foo) => parseInt(foo, 10),
+      (value) => responseOf(value)
     ))
 
     const response = await chai.request(app)
@@ -40,9 +40,9 @@ describe('asyncHandler', () => {
   it('handles async functions', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      async req => req.params.foo as string,
-      foo => parseInt(foo),
-      value => Promise.resolve(responseOf(value))
+      async (req) => req.params.foo as string,
+      (foo) => parseInt(foo, 10),
+      (value) => Promise.resolve(responseOf(value))
     ))
 
     const response = await chai.request(app)
