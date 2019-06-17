@@ -1,10 +1,14 @@
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import { asyncHandler } from '../src/asyncHandler'
 import { responseOf } from '../src/response'
 
 chai.use(chaiHttp)
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  res.status(500).send(err && err.message)
+}
 
 describe('asyncHandler', () => {
   it('accepts a function that transforms a request into a response', async () => {
@@ -51,5 +55,19 @@ describe('asyncHandler', () => {
 
     expect(response.status).to.equal(200)
     expect(response.body).to.deep.equal(1234)
+  })
+
+  it('catches errors', async () => {
+    const app = express()
+    app.get('/:foo', asyncHandler(
+      () => { throw new Error() }
+    ))
+    app.use(errorHandler)
+
+    const response = await chai.request(app)
+      .get('/1234')
+      .send()
+
+    expect(response.status).to.equal(500)
   })
 })
