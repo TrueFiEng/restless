@@ -1,5 +1,5 @@
 {
-  "name": "@ethworks/restless",
+  "name": "@restless/restless",
   "version": "0.1.0",
   "description": "Express.js api, validations and more",
   "keywords": [
