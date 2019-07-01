@@ -23,7 +23,7 @@ describe('sanitize', () => {
     app.use(bodyParser.json())
     app.post(path, asyncHandler(
       middleware,
-      x => responseOf(x)
+      (x) => responseOf(x)
     ))
     app.use(errorHandler)
     return app

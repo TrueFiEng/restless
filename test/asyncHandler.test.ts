@@ -62,7 +62,7 @@ describe('asyncHandler', () => {
     app.get('/:foo', asyncHandler(
       (_, req) => req.params.foo as string,
       (foo, req) => req.params.foo + foo,
-      (foo2, req) => responseOf({ foo: req.params.foo, foo2 }),
+      (foo2, req) => responseOf({ foo: req.params.foo, foo2 })
     ))
 
     const response = await chai.request(app)
