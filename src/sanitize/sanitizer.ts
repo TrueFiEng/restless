@@ -10,5 +10,5 @@ export const Either = {
   }
 }
 
-export interface SanitizerError { path: string, expected: string }
-export type Sanitizer<T> = (value: unknown, path: string) => Either<SanitizerError[], T>
+export interface SanitizerFailure { path: string, expected: string }
+export type Sanitizer<T> = (value: unknown, path: string) => Either<SanitizerFailure[], T>

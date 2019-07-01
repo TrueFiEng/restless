@@ -1,4 +1,4 @@
-import { Either, Sanitizer, SanitizerError } from './sanitizer'
+import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
 
 type Schema<T> = {
   [K in keyof T]: Sanitizer<T[K]>
@@ -10,7 +10,7 @@ export const asObject = <T extends object> (schema: Schema<T>): Sanitizer<T> =>
       return Either.left([{ path, expected: 'object' }])
     }
     const results: T = {} as any
-    const errors: SanitizerError[] = []
+    const errors: SanitizerFailure[] = []
     for (const key in schema) {
       if (Object.hasOwnProperty.call(schema, key)) {
         const result = schema[key]((value as T)[key], `${path}.${key}`)
