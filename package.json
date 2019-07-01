@@ -4,7 +4,7 @@
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
   "keywords": [
-    "express",
+    "express",  
     "rest",
     "api",
     "validation",
