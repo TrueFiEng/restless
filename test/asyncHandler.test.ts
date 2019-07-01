@@ -14,7 +14,7 @@ describe('asyncHandler', () => {
   it('accepts a function that transforms a request into a response', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      (req) => responseOf({ foo: req.params.foo }, 404)
+      (_, req) => responseOf({ foo: req.params.foo }, 404)
     ))
 
     const response = await chai.request(app)
@@ -28,7 +28,7 @@ describe('asyncHandler', () => {
   it('accepts multiple functions that connect as a pipe', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      (req) => req.params.foo as string,
+      (_, req) => req.params.foo as string,
       (foo) => parseInt(foo, 10),
       (value) => responseOf(value)
     ))
@@ -44,7 +44,7 @@ describe('asyncHandler', () => {
   it('handles async functions', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      async (req) => req.params.foo as string,
+      async (_, req) => req.params.foo as string,
       (foo) => parseInt(foo, 10),
       (value) => Promise.resolve(responseOf(value))
     ))
@@ -55,6 +55,25 @@ describe('asyncHandler', () => {
 
     expect(response.status).to.equal(200)
     expect(response.body).to.deep.equal(1234)
+  })
+
+  it('passes request to every function', async () => {
+    const app = express()
+    app.get('/:foo', asyncHandler(
+      (_, req) => req.params.foo as string,
+      (foo, req) => req.params.foo + foo,
+      (foo2, req) => responseOf({ foo: req.params.foo, foo2 }),
+    ))
+
+    const response = await chai.request(app)
+      .get('/foo')
+      .send()
+
+    expect(response.status).to.equal(200)
+    expect(response.body).to.deep.equal({
+      foo: 'foo',
+      foo2: 'foofoo'
+    })
   })
 
   it('catches errors', async () => {

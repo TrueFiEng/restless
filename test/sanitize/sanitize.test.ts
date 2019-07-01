@@ -2,7 +2,7 @@ import bodyParser from 'body-parser'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express, { ErrorRequestHandler, Request } from 'express'
-import { asNumber, asObject, asString, Either } from '../../src'
+import { asNumber, asObject, asString } from '../../src'
 import { asyncHandler } from '../../src/asyncHandler'
 import { responseOf } from '../../src/response'
 import { sanitize, SanitizeError } from '../../src/sanitize/sanitize'
@@ -18,12 +18,12 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 }
 
 describe('sanitize', () => {
-  function makeApp (path: string, middleware: (req: Request) => any) {
+  function makeApp (path: string, middleware: (data: any, req: Request) => any) {
     const app = express()
     app.use(bodyParser.json())
     app.post(path, asyncHandler(
       middleware,
-      responseOf
+      x => responseOf(x)
     ))
     app.use(errorHandler)
     return app
@@ -37,8 +37,7 @@ describe('sanitize', () => {
       }),
       query: asObject({
         a: asString
-      }),
-      request: (req) => Either.right((req as Request).params.foo)
+      })
     }))
 
     const response = await chai.request(app)
@@ -49,8 +48,7 @@ describe('sanitize', () => {
     expect(response.body).to.deep.equal({
       foo: 'hello',
       body: { bar: 'bar' },
-      query: { a: 'world' },
-      request: 'hello'
+      query: { a: 'world' }
     })
   })
 
