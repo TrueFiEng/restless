@@ -1,6 +1,7 @@
 {
   "name": "@restless/restless",
   "version": "0.2.0",
+  "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
   "keywords": [
     "express",
@@ -12,6 +13,10 @@
     "typescript",
     "library"
   ],
+  "homepage": "https://github.com/EthWorks/restless",
+  "bugs": {
+    "url" : "https://github.com/EthWorks/restless/issues"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
