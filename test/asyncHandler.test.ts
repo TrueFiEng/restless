@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
-import express, { ErrorRequestHandler } from 'express'
+import express, { ErrorRequestHandler, Request } from 'express'
+import { asString, sanitize } from '../src'
 import { asyncHandler } from '../src/asyncHandler'
 import { responseOf } from '../src/response'
 
@@ -88,5 +89,48 @@ describe('asyncHandler', () => {
       .send()
 
     expect(response.status).to.equal(500)
+  })
+})
+
+describe('asyncHandler (TYPE CHECK ONLY)', () => {
+  it('handles normal use case', async () => {
+    asyncHandler(
+      sanitize({ foo: asString }),
+      (data) => responseOf(data.foo)
+    )
+  })
+
+  it('handles extracted function', async () => {
+    const fn = (data: { foo: string }) => responseOf(data.foo)
+    asyncHandler(
+      sanitize({ foo: asString }),
+      fn
+    )
+  })
+
+  it('handles extracted function with second argument', async () => {
+    const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
+    asyncHandler(
+      sanitize({ foo: asString }),
+      fn
+    )
+  })
+
+  it('handles extracted function with second argument', async () => {
+    const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
+    asyncHandler(
+      sanitize({ foo: asString }),
+      fn
+    )
+  })
+
+  it('handles multiple functions', async () => {
+    const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
+    asyncHandler(
+      sanitize({ foo: asString }),
+      fn,
+      async (res) => res,
+      (res) => Promise.resolve(responseOf(res.data, 404))
+    )
   })
 })

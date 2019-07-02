@@ -1,41 +1,41 @@
 import { Request, RequestHandler } from 'express'
 import { Response } from './response'
 
-type Fn<T, U> = (data: T, req: Request) => U
-type UnPromise<T> = T extends Promise<infer U> ? U : T
+type Fn<T, U> = (data: T, req: Request) => MaybePromise<U>
+type MaybePromise<T> = T | Promise<T>
 
 export function asyncHandler <R> (
-  a: Fn<undefined, Response<R> | Promise<Response<R>>>
+  a: Fn<undefined, Response<R>>
 ): RequestHandler
 export function asyncHandler <A, R> (
   a: Fn<undefined, A>,
-  b: Fn<UnPromise<A>, Response<R> | Promise<Response<R>>>
+  b: Fn<A, Response<R>>
 ): RequestHandler
 export function asyncHandler <A, B, R> (
   a: Fn<undefined, A>,
-  b: Fn<UnPromise<A>, B>,
-  c: Fn<UnPromise<B>, Response<R> | Promise<Response<R>>>
+  b: Fn<A, B>,
+  c: Fn<B, Response<R>>
 ): RequestHandler
 export function asyncHandler <A, B, C, R> (
   a: Fn<undefined, A>,
-  b: Fn<UnPromise<A>, B>,
-  c: Fn<UnPromise<B>, C>,
-  d: Fn<UnPromise<C>, Response<R> | Promise<Response<R>>>
+  b: Fn<A, B>,
+  c: Fn<B, C>,
+  d: Fn<C, Response<R>>
 ): RequestHandler
 export function asyncHandler <A, B, C, D, R> (
   a: Fn<undefined, A>,
-  b: Fn<UnPromise<A>, B>,
-  c: Fn<UnPromise<B>, C>,
-  d: Fn<UnPromise<C>, D>,
-  e: Fn<UnPromise<D>, Response<R> | Promise<Response<R>>>
+  b: Fn<A, B>,
+  c: Fn<B, C>,
+  d: Fn<C, D>,
+  e: Fn<D, Response<R>>
 ): RequestHandler
 export function asyncHandler <A, B, C, D, E, R> (
   a: Fn<undefined, A>,
-  b: Fn<UnPromise<A>, B>,
-  c: Fn<UnPromise<B>, C>,
-  d: Fn<UnPromise<C>, D>,
-  e: Fn<UnPromise<D>, E>,
-  f: Fn<UnPromise<E>, Response<R> | Promise<Response<R>>>
+  b: Fn<A, B>,
+  c: Fn<B, C>,
+  d: Fn<C, D>,
+  e: Fn<D, E>,
+  f: Fn<E, Response<R>>
 ): RequestHandler
 export function asyncHandler (...handlers: Array<Fn<any, any>>): RequestHandler {
   return async (req, res, next) => {
