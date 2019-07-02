@@ -116,14 +116,6 @@ describe('asyncHandler (TYPE CHECK ONLY)', () => {
     )
   })
 
-  it('handles extracted function with second argument', async () => {
-    const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
-    asyncHandler(
-      sanitize({ foo: asString }),
-      fn
-    )
-  })
-
   it('handles multiple functions', async () => {
     const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
     asyncHandler(
