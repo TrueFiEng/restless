@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import { Either } from '../../src/sanitize/sanitizer'
 import { asMatching } from '../../src/sanitize/asMatching'
+import { Either } from '../../src/sanitize/sanitizer'
 
 describe('asString', () => {
   it('sanitizes strings', async () => {
