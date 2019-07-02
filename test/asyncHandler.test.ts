@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express, { ErrorRequestHandler } from 'express'
-import { asNumber, asObject, asString, sanitize } from '../src'
 import { asyncHandler } from '../src/asyncHandler'
 import { responseOf } from '../src/response'
 
