@@ -1,6 +1,6 @@
 {
   "name": "@restless/restless",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
   "keywords": [
