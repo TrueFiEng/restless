@@ -133,6 +133,18 @@ asBoolean('boo') // FAIL (not a boolean)
 asBoolean(123) // FAIL (not a boolean)
 ```
 
+### `asMatching`
+
+This higher-order sanitizer accepts values that are strings matching the regex provided as an argument. You can pass a custom message to it.
+
+```javascript
+const sanitizer = asMatching(/aaa/, 'custom message')
+
+sanitizer('aaa') // OK 'aaa'
+sanitizer(123) // FAIL (custom message)
+sanitizer('b') // FAIL (custom message)
+```
+
 ### `asObject`
 
 This higher-order sanitizer requires a schema in the form of an object. Values of the schema are sanitizers used to sanitize the values of the input. Returns an object with keys and values matching the schema.
