@@ -1,8 +1,4 @@
-import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
-
-type Schema<T> = {
-  [K in keyof T]: Sanitizer<T[K]>
-}
+import { Either, Sanitizer, SanitizerFailure, Schema } from './sanitizer'
 
 export const asObject = <T extends object> (schema: Schema<T>): Sanitizer<T> =>
   (value, path) => {

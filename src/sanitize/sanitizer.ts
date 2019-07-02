@@ -12,3 +12,11 @@ export const Either = {
 
 export interface SanitizerFailure { path: string, expected: string }
 export type Sanitizer<T> = (value: unknown, path: string) => Either<SanitizerFailure[], T>
+
+export type Schema<T> = {
+  [K in keyof T]: Sanitizer<T[K]>
+}
+
+export type SchemaResult<S> = {
+  [K in keyof S]: S[K] extends Sanitizer<infer T> ? T : never
+}

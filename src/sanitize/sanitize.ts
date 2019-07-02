@@ -1,9 +1,5 @@
 import { Request } from 'express'
-import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
-
-type Schema<T> = {
-  [K in keyof T]: Sanitizer<T[K]>
-}
+import { Either, SanitizerFailure, Schema, SchemaResult } from './sanitizer'
 
 export class SanitizeError extends Error {
   constructor (public errors: SanitizerFailure[]) {
@@ -12,9 +8,9 @@ export class SanitizeError extends Error {
   }
 }
 
-export const sanitize = <T>(schema: Schema<T>) =>
-  (data: unknown, req: Request) => {
-    const sanitized: T = {} as any
+export const sanitize = <S extends Schema<any>>(schema: S) =>
+  (data: unknown, req: Request): SchemaResult<S> => {
+    const sanitized: SchemaResult<S> = {} as any
     const errors: SanitizerFailure[] = []
     for (const key in schema) {
       if (Object.hasOwnProperty.call(schema, key)) {

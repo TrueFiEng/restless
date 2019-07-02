@@ -1,8 +1,7 @@
 import { Request, RequestHandler } from 'express'
 import { Response } from './response'
 
-type Fn<T, U> = (data: T, req: Request) => MaybePromise<U>
-type MaybePromise<T> = T | Promise<T>
+type Fn<T, U> = (data: T, req: Request) => U | Promise<U>
 
 export function asyncHandler <R> (
   a: Fn<undefined, Response<R>>
