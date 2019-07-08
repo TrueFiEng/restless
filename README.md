@@ -82,7 +82,7 @@ responseOfBuffer('jpeg', Buffer.from('ABC', 'ascii'), 404) // custom status-code
 ```
 
 
-### `sanitize`
+## `sanitize`
 
 The `sanitize` function is a transformer. It transforms the request into an object that matches a schema you provide. The keys in the provided schema correspond to the url parameters with the exception of `body` and `query` which correspond to the request body and parsed query string respectively.
 
