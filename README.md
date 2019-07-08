@@ -59,10 +59,28 @@ app.get('/:foo', asyncHandler(
 ))
 ```
 
+## Responses
+
+These are simple higher-order helper function used to construct responses. The `asyncHandler` requires that the last function passed to it returns a response.
+
 ### `responseOf`
 
-This function is a simple helper function used to construct the following object:
-`{ body: any, status: number }`. The `asyncHandler` requires that the last function passed to it returns a response.
+Used to send json data:
+```javascript
+responseOf({ foo: 'bar' }) // default 200 status
+
+responseOf({ error: 'NOT_FOUND' }, 404) // custom status-code
+```
+
+### `responseOfBuffer`
+
+Used to send binary data from `Buffer`, use the first argument to specify data type:
+```javascript
+responseOfBuffer('png', Buffer.from('ABC', 'ascii')) // default 200 status
+
+responseOfBuffer('jpeg', Buffer.from('ABC', 'ascii'), 404) // custom status-code
+```
+
 
 ### `sanitize`
 
