@@ -14,3 +14,5 @@ This is a monorepo for Restless project. Look at their respective READMEs for fu
 
 It includes following packages:
 * [`restless`](https://github.com/EthWorks/restless/tree/master/restless) - core package
+
+All contributions are welcome. Look at "help-wanted" [issues](https://github.com/EthWorks/restless/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) for ideas.
