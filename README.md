@@ -59,16 +59,15 @@ app.get('/:foo', asyncHandler(
 ))
 ```
 
-## Responses
+## Response functions
 
-These are simple higher-order helper function used to construct responses. The `asyncHandler` requires that the last function passed to it returns a response.
+These are simple higher-order helper functions used to construct express responses. The `asyncHandler` requires that the last function passed to it returns a response function.
 
 ### `responseOf`
 
 Used to send json data:
 ```javascript
 responseOf({ foo: 'bar' }) // default 200 status
-
 responseOf({ error: 'NOT_FOUND' }, 404) // custom status-code
 ```
 
@@ -77,12 +76,26 @@ responseOf({ error: 'NOT_FOUND' }, 404) // custom status-code
 Used to send binary data from `Buffer`, use the first argument to specify data type:
 ```javascript
 responseOfBuffer('png', Buffer.from('ABC', 'ascii')) // default 200 status
-
 responseOfBuffer('jpeg', Buffer.from('ABC', 'ascii'), 404) // custom status-code
 ```
 
+### Custom responses
 
-## `sanitize`
+In order to create a custom response all you need to do is write a custom function for it. Let's see how to create a response function for rendering views. First we need to consult the [express documentation](https://expressjs.com/en/4x/api.html#res.render). There we see that in order to send a rendered view to the client we must call `res.render`. Writing a function for restless is now a piece of cake:
+
+```typescript
+import { ResponseFunction } from '@restless/restless'
+import { Response } from 'express'
+
+export const responseOfView = (view: string, locals?: any, status = 200): ResponseFunction =>
+  res => res
+    .status(status)
+    .render(view, locals)
+```
+
+## Sanitization
+
+### `sanitize`
 
 The `sanitize` function is a transformer. It transforms the request into an object that matches a schema you provide. The keys in the provided schema correspond to the url parameters with the exception of `body` and `query` which correspond to the request body and parsed query string respectively.
 
@@ -117,8 +130,6 @@ GET /123?baz=456 '{"bar":789}'
 ### `SanitizeError`
 
 This is the error that is thrown when `sanitize` function receives data that does not match the schema.
-
-## Sanitizers
 
 ### `asString`
 
