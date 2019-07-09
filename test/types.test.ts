@@ -33,12 +33,12 @@ describe('Type declarations', () => {
   })
 
   it('handles multiple functions', async () => {
-    const fn = (data: { foo: string }, req: Request) => responseOf(data.foo + req.params.foo)
+    const fn = (data: { foo: string }, req: Request) => data.foo + req.params.foo
     asyncHandler(
       sanitize({ foo: asString }),
       fn,
       async (res) => res,
-      (res) => Promise.resolve(responseOf(res.data, 404))
+      (res) => Promise.resolve(responseOf(res, 404))
     )
   })
 
