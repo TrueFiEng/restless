@@ -32,12 +32,21 @@ All contributions are welcome. Look at "help-wanted" [issues](https://github.com
 We thank you for all the contributions:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- SORTED CHRONOLOGICALLY -->
 <a href="https://github.com/sz-piotr">
   <img
     src="https://avatars1.githubusercontent.com/u/17070569?s=460&v=4"
     width="64px"
     alt="Piotr Szlachciak"
     title="Piotr Szlachciak"
+  />
+</a>
+<a href="https://github.com/marekkirejczyk">
+  <img
+    src="https://avatars3.githubusercontent.com/u/197522?s=400&v=4"
+    width="64px"
+    alt="Marek Kirejczyk"
+    title="Marek Kirejczyk"
   />
 </a>
 <a href="https://github.com/Marik-D">
