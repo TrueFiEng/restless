@@ -1,5 +1,5 @@
 export { asyncHandler } from './asyncHandler'
-export { responseOf } from './response'
+export { ResponseFunction, responseOf, responseOfBuffer } from './response'
 export { Either, Sanitizer, SanitizerFailure } from './sanitize/sanitizer'
 export { sanitize, SanitizeError } from './sanitize/sanitize'
 export { asString } from './sanitize/asString'

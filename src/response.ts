@@ -1,15 +1,14 @@
-import { Response as ExpressResponse } from 'express'
+import { Response } from 'express'
 
-export type Response = (res: ExpressResponse) => void
+export type ResponseFunction = (res: Response) => void
 
-export const responseOf = (data: any, status = 200): Response => (res) => {
-  res
+export const responseOf = (data: any, status = 200): ResponseFunction =>
+  res => res
     .status(status)
     .json(data)
-}
 
-export const responseOfBuffer = (type: string, data: Buffer, status = 200): Response => (res) => {
-  res.status(status)
+export const responseOfBuffer = (type: string, data: Buffer, status = 200): ResponseFunction =>
+  res => res
+    .status(status)
     .type(type)
     .send(data)
-}
