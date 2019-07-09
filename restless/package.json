@@ -3,6 +3,7 @@
   "version": "0.2.4",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
+  "license": "Unlicense",
   "keywords": [
     "express",
     "rest",
