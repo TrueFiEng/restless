@@ -2,7 +2,7 @@ import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express from 'express'
 import { asyncHandler } from '../src/asyncHandler'
-import { Response, responseOf, responseOfBuffer } from '../src/response'
+import { ResponseFunction, responseOf, responseOfBuffer } from '../src/response'
 
 chai.use(chaiHttp)
 
@@ -42,7 +42,7 @@ describe('response', () => {
   })
 })
 
-async function testResponse (response: Response) {
+async function testResponse (response: ResponseFunction) {
   const app = express()
   app.get('/', asyncHandler(() => response))
 
