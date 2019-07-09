@@ -1,32 +1,32 @@
 import { Request, RequestHandler } from 'express'
-import { Response } from './response'
+import { ResponseFunction } from './response'
 
 type Fn<T, U> = (data: T, req: Request) => U | Promise<U>
 
 export function asyncHandler<R> (
-  a: Fn<undefined, Response>
+  a: Fn<undefined, ResponseFunction>
 ): RequestHandler
 export function asyncHandler<A, R> (
   a: Fn<undefined, A>,
-  b: Fn<A, Response>
+  b: Fn<A, ResponseFunction>
 ): RequestHandler
 export function asyncHandler<A, B, R> (
   a: Fn<undefined, A>,
   b: Fn<A, B>,
-  c: Fn<B, Response>
+  c: Fn<B, ResponseFunction>
 ): RequestHandler
 export function asyncHandler<A, B, C, R> (
   a: Fn<undefined, A>,
   b: Fn<A, B>,
   c: Fn<B, C>,
-  d: Fn<C, Response>
+  d: Fn<C, ResponseFunction>
 ): RequestHandler
 export function asyncHandler<A, B, C, D, R> (
   a: Fn<undefined, A>,
   b: Fn<A, B>,
   c: Fn<B, C>,
   d: Fn<C, D>,
-  e: Fn<D, Response>
+  e: Fn<D, ResponseFunction>
 ): RequestHandler
 export function asyncHandler<A, B, C, D, E, R> (
   a: Fn<undefined, A>,
@@ -34,7 +34,7 @@ export function asyncHandler<A, B, C, D, E, R> (
   c: Fn<B, C>,
   d: Fn<C, D>,
   e: Fn<D, E>,
-  f: Fn<E, Response>
+  f: Fn<E, ResponseFunction>
 ): RequestHandler
 export function asyncHandler (...handlers: Array<Fn<any, any>>): RequestHandler {
   return async (req, res, next) => {
@@ -43,7 +43,7 @@ export function asyncHandler (...handlers: Array<Fn<any, any>>): RequestHandler 
         handlers,
         (data, handler) => handler(data, req),
         undefined
-      ) as any as Response
+      ) as any as ResponseFunction
 
       result(res)
       next()
