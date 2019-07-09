@@ -3,6 +3,7 @@
   "version": "0.2.4",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
+  "license": "Unlicense",
   "keywords": [
     "express",
     "rest",
@@ -15,7 +16,7 @@
   ],
   "homepage": "https://github.com/EthWorks/restless",
   "bugs": {
-    "url" : "https://github.com/EthWorks/restless/issues"
+    "url": "https://github.com/EthWorks/restless/issues"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
