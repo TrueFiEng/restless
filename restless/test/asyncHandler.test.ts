@@ -89,4 +89,18 @@ describe('asyncHandler', () => {
 
     expect(response.status).to.equal(500)
   })
+
+  it('does not pass control to another handler', async () => {
+    const app = express()
+    let called = false
+    app.get('/user/:id', asyncHandler(() => responseOf('first')))
+    app.get('/user/:id', asyncHandler((): any => {
+      called = true
+    }))
+
+    const response = await chai.request(app).get('/user/123').send()
+
+    expect(called).to.equal(false)
+    expect(response.body).to.equal('first')
+  })
 })
