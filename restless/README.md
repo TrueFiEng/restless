@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="250" src="../logo.png">
+  <img width="250" src="https://raw.githubusercontent.com/EthWorks/restless/master/logo.png">
   <br>
 
 [![NPM](https://img.shields.io/npm/v/@restless/restless.svg)](https://www.npmjs.com/package/@restless/restless)
