@@ -1,6 +1,6 @@
 <div align="center">
-  <img width="250" src="./logo.png">
-<br>
+  <img width="250" src="../logo.png">
+  <br>
 
 [![NPM](https://img.shields.io/npm/v/@restless/restless.svg)](https://www.npmjs.com/package/@restless/restless)
 [![CircleCI](https://img.shields.io/circleci/build/github/EthWorks/restless/master.svg)](https://circleci.com/gh/EthWorks/restless/tree/master)
