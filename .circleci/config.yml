@@ -29,8 +29,38 @@ jobs:
           name: Test
           command: yarn test
 
+  ethereum:
+    working_directory: ~/project/ethereum
+    docker:
+      - image: circleci/node:11.13
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-ethereum-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-ethereum-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Run linter
+          command: yarn lint
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Test
+          command: yarn test
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - restless
+      - ethereum

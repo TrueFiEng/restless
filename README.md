@@ -20,6 +20,7 @@ This is a monorepo for Restless project. Restless is a library for writing safe 
 
 Included packages:
 * [`restless`](https://github.com/EthWorks/restless/tree/master/restless) - core package
+* [`ethereum`](https://github.com/EthWorks/restless/tree/master/ethereum) - ethereum utilities
 
 ## Documentation
 
