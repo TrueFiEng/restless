@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { asMatching } from '../../src/sanitize/asMatching'
 import { Either } from '../../src/sanitize/sanitizer'
 
-describe('asString', () => {
+describe('asMatching', () => {
   it('sanitizes strings', async () => {
     const asMyString = asMatching(/.*/)
     const result = asMyString('hello', '')

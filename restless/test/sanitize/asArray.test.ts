@@ -3,7 +3,7 @@ import { asArray } from '../../src/sanitize/asArray'
 import { asNumber } from '../../src/sanitize/asNumber'
 import { Either } from '../../src/sanitize/sanitizer'
 
-describe('asObject', () => {
+describe('asArray', () => {
   it('sanitizes empty arrays', async () => {
     const asMyArray = asArray(asNumber)
     const result = asMyArray([], '')
