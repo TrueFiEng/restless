@@ -58,6 +58,14 @@ We thank you for all the contributions:
     title="Dmytro Maretskyi"
   />
 </a>
+<a href="https://github.com/rzadp">
+  <img
+    src="https://avatars3.githubusercontent.com/u/12039224?s=400&v=4"
+    width="64px"
+    alt="Przemysław Rząd"
+    title="Przemysław Rząd"
+  />
+</a>
 <!-- ALL-CONTRIBUTORS-LIST:END - Do not remove or modify this section -->
 
 ## Changelog
