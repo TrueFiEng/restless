@@ -1,6 +1,6 @@
+import { Either } from '@restless/restless'
 import { expect } from 'chai'
 import { Wallet } from 'ethers'
-import { Either } from '@restless/restless'
 import { asEthAddress } from '../src/asEthAddress'
 
 describe('asEthAddress', () => {

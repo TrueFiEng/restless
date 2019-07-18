@@ -6,6 +6,6 @@ export const asBigNumber: Sanitizer<utils.BigNumber> = (value, path) => {
     if (typeof value === 'string' || typeof value === 'number') {
       return Either.right(utils.bigNumberify(value))
     }
-  } catch {}
+  } catch {} // tslint:disable-line
   return Either.left([{ path, expected: 'big number' }])
 }

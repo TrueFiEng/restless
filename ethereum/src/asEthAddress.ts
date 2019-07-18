@@ -6,6 +6,6 @@ export const asEthAddress: Sanitizer<string> = (value, path) => {
     if (typeof value === 'string') {
       return Either.right(utils.getAddress(value))
     }
-  } catch {}
+  } catch {} // tslint:disable-line
   return Either.left([{ path, expected: 'ethereum address' }])
 }

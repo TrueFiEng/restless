@@ -1,6 +1,6 @@
+import { Either } from '@restless/restless'
 import { expect } from 'chai'
 import { utils } from 'ethers'
-import { Either } from '@restless/restless'
 import { asBigNumber } from '../src/asBigNumber'
 
 describe('asBigNumber', () => {
