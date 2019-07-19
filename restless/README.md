@@ -39,6 +39,22 @@ GET /add/foo/2 -> 400: { path: 'params.a', expected: 'number' }
 
 ## Api
 
+- [`asyncHandler`](#asynchandler)
+- [`responseOf`](#responseof)
+- [`responseOfBuffer`](#responseofbuffer)
+- [`sanitize`](#sanitize)
+- [`SanitizeError`](#sanitizeerror)
+- [`asString`](#asstring)
+- [`asNumber`](#assumber)
+- [`asBoolean`](#asboolean)
+- [`asMatching`](#asmatching)
+- [`asObject`](#asobject)
+- [`asArray`](#asarray)
+- [`asOptional`](#asoptional)
+- [`asChecked`](#aschecked)
+- [`asMapped`](#asmapped)
+- [`asFlatMapped`](#asflatmapped)
+
 ### `asyncHandler`
 
 This function is essentially an async pipe. It takes a set of possibly async functions that are called with the return value of the previous function. It returns an express middleware that should be passed as a route handler to express.
@@ -136,8 +152,8 @@ This is the error that is thrown when `sanitize` function receives data that doe
 Accepts any value that is a string. Returns a string.
 
 ```javascript
-asString('asd') // OK 'asd'
-asString(123) // FAIL (not a string)
+asString('asd') // RIGHT 'asd'
+asString(123) // LEFT 'expected: string'
 ```
 
 ### `asNumber`
@@ -145,10 +161,10 @@ asString(123) // FAIL (not a string)
 Accepts any value that is a number or a string that represents a number. Returns a number.
 
 ```javascript
-asNumber(123) // OK 123
-asNumber('0.2') // OK 0.2
-asNumber('boo') // FAIL (not a number)
-asNumber({}) // FAIL (not a number)
+asNumber(123) // RIGHT 123
+asNumber('0.2') // RIGHT 0.2
+asNumber('boo') // LEFT 'expected: number'
+asNumber({}) // LEFT 'expected: number'
 ```
 
 ### `asBoolean`
@@ -156,10 +172,10 @@ asNumber({}) // FAIL (not a number)
 Accepts any value that is a number or a string that represents a boolean (`"true"` or `"false"`). Returns a number.
 
 ```javascript
-asBoolean(true) // OK true
-asBoolean('false') // OK false
-asBoolean('boo') // FAIL (not a boolean)
-asBoolean(123) // FAIL (not a boolean)
+asBoolean(true) // RIGHT true
+asBoolean('false') // RIGHT false
+asBoolean('boo') // LEFT 'expected: boolean'
+asBoolean(123) // LEFT 'expected: boolean'
 ```
 
 ### `asMatching`
@@ -169,9 +185,9 @@ This higher-order sanitizer accepts values that are strings matching the regex p
 ```javascript
 const sanitizer = asMatching(/aaa/, 'custom message')
 
-sanitizer('aaa') // OK 'aaa'
-sanitizer(123) // FAIL (custom message)
-sanitizer('b') // FAIL (custom message)
+sanitizer('aaa') // RIGHT 'aaa'
+sanitizer(123) // LEFT 'expected: custom message'
+sanitizer('b') // LEFT 'expected: custom message'
 ```
 
 ### `asObject`
@@ -181,10 +197,10 @@ This higher-order sanitizer requires a schema in the form of an object. Values o
 ```javascript
 const sanitizer = asObject({ foo: asNumber, bar: asString })
 
-sanitizer({ foo: 1, bar: 'a' }) // OK { foo: 1, bar: 'a' }
-sanitizer(123) // FAIL (not an object)
-sanitizer({}) // FAIL (missing values)
-sanitizer({ foo: true, bar: 'a' ) // FAIL (foo is not a number)
+sanitizer({ foo: 1, bar: 'a' }) // RIGHT { foo: 1, bar: 'a' }
+sanitizer(123) // LEFT 'expected: object'
+sanitizer({}) // LEFT ['(.foo) expected: number', '(.bar) expected: string']
+sanitizer({ foo: true, bar: 'a' ) // LEFT '(.foo) expected: number'
 ```
 
 ### `asArray`
@@ -194,9 +210,9 @@ This higher-order sanitizer accepts any value that is an array of items that are
 ```javascript
 const sanitizer = asArray(asNumber)
 
-sanitizer([123, '45']) // OK [123, 45]
-sanitizer(123) // FAIL (not an array)
-sanitizer([123, 'foo']) // FAIL (2nd element does not sanitize as a number)
+sanitizer([123, '45']) // RIGHT [123, 45]
+sanitizer(123) // LEFT 'expected: array'
+sanitizer([123, 'foo']) // LEFT '([0]) expected: number'
 ```
 
 ### `asOptional`
@@ -206,20 +222,51 @@ This higher-order sanitizer accepts undefined or null or any value that is sanit
 ```javascript
 const sanitizer = asOptional(asString)
 
-sanitizer('abcdef') // OK 'abcdef'
-sanitizer(null) // OK null
-sanitizer(undefined) // OK undefined
-sanitizer(123) // FAIL (not a string or null or undefined)
+sanitizer('abcdef') // RIGHT 'abcdef'
+sanitizer(null) // RIGHT undefined
+sanitizer(undefined) // RIGHT undefined
+sanitizer(123) // LEFT 'expected: string'
 ```
 
 ### `asChecked`
 
-This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument and satisfies the predicate passed as the second argument.
+This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument and satisfies the predicate passed as the second argument. A third argument that specifies an optional expected message can be provided
 
 ```javascript
 const sanitizer = asChecked(asString, x => x.length > 3)
 
-sanitizer('abcdef') // OK 'abcdef'
-sanitizer(123) // FAIL (not a string)
-sanitizer('a') // FAIL (too short)
+sanitizer('abcdef') // RIGHT 'abcdef'
+sanitizer(123) // LEFT 'expected: string'
+sanitizer('a') // LEFT 'expected: custom logic'
+```
+```javascript
+const sanitizer = asChecked(asString, x => x.length > 3, 'string longer than 3')
+sanitizer('a') // LEFT 'expected: string longer than 3'
+```
+
+### `asMapped`
+
+This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function.
+
+```javascript
+const sanitizer = asMapped(asNumber, x => x > 1)
+
+sanitizer(123) // RIGHT true
+sanitizer(0) // RIGHT false
+sanitizer('a') // LEFT 'expected: number'
+```
+
+### `asFlatMapped`
+
+This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return either a new value or an error.
+
+```javascript
+const sanitizer = asMapped(asNumber, (value, path) => x > 1
+  ? Either.right(value)
+  : Either.left([{ path, expected: 'number > 1' }])
+)
+
+sanitizer(123) // RIGHT 123
+sanitizer(0) // LEFT 'expected: number > 1'
+sanitizer('a') // LEFT 'expected: number'
 ```
