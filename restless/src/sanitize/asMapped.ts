@@ -2,7 +2,7 @@ import { Either, Sanitizer } from './sanitizer'
 
 export const asMapped = <T, U> (
   sanitizer: Sanitizer<T>,
-  mapFn: (value: T) => U,
+  mapFn: (value: T) => U
 ): Sanitizer<U> => (value, path) => {
   const result = sanitizer(value, path)
   if (Either.isRight(result)) {

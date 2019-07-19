@@ -5,13 +5,13 @@ import { Either } from '../../src/sanitize/sanitizer'
 
 describe('asFlatMapped', () => {
   it('sanitizes using the nested sanitizer and flat maps', async () => {
-    const asStringInArray = asFlatMapped(asString, x => Either.right([x]))
+    const asStringInArray = asFlatMapped(asString, (x) => Either.right([x]))
     const result = asStringInArray('abc', '')
     expect(result).to.deep.equal(Either.right(['abc']))
   })
 
   it('returns nested sanitizer errors', async () => {
-    const asStringInArray = asFlatMapped(asString, x => Either.right([x]))
+    const asStringInArray = asFlatMapped(asString, (x) => Either.right([x]))
     const result = asStringInArray(false, 'path')
     expect(result).to.deep.equal(
       Either.left([{ path: 'path', expected: 'string' }])
