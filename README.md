@@ -10,9 +10,64 @@
 
 # Restless
 
-This is a monorepo for Restless project. Look at their respective READMEs for further documentation.
+This is a monorepo for Restless project. Restless is a library for writing safe and declarative endpoints in express. It is:
 
-It includes following packages:
+1. Easy to write and read
+2. Declarative
+3. Type safe
+
+## Packages
+
+Included packages:
 * [`restless`](https://github.com/EthWorks/restless/tree/master/restless) - core package
+* [`ethereum`](https://github.com/EthWorks/restless/tree/master/ethereum) - ethereum utilities
+
+## Documentation
+
+All the packages are documented in their respective READMEs.
+
+## Contributions
 
 All contributions are welcome. Look at "help-wanted" [issues](https://github.com/EthWorks/restless/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) for ideas.
+
+We thank you for all the contributions:
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- SORTED CHRONOLOGICALLY -->
+<a href="https://github.com/sz-piotr">
+  <img
+    src="https://avatars1.githubusercontent.com/u/17070569?s=460&v=4"
+    width="64px"
+    alt="Piotr Szlachciak"
+    title="Piotr Szlachciak"
+  />
+</a>
+<a href="https://github.com/marekkirejczyk">
+  <img
+    src="https://avatars3.githubusercontent.com/u/197522?s=400&v=4"
+    width="64px"
+    alt="Marek Kirejczyk"
+    title="Marek Kirejczyk"
+  />
+</a>
+<a href="https://github.com/Marik-D">
+  <img
+    src="https://avatars2.githubusercontent.com/u/35851437?s=460&v=4"
+    width="64px"
+    alt="Dmytro Maretskyi"
+    title="Dmytro Maretskyi"
+  />
+</a>
+<a href="https://github.com/rzadp">
+  <img
+    src="https://avatars3.githubusercontent.com/u/12039224?s=400&v=4"
+    width="64px"
+    alt="Przemysław Rząd"
+    title="Przemysław Rząd"
+  />
+</a>
+<!-- ALL-CONTRIBUTORS-LIST:END - Do not remove or modify this section -->
+
+## Changelog
+
+You can see the changelog by browsing [releases](https://github.com/EthWorks/restless/releases) on github.

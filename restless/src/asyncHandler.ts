@@ -46,7 +46,6 @@ export function asyncHandler(...handlers: Array<Fn<any, any>>): RequestHandler {
       ) as any as ResponseFunction
 
       result(res)
-      next()
     } catch (err) {
       if (err instanceof ShortCircuitResponse) {
         err.response(res)
