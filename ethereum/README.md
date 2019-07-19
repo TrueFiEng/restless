@@ -22,10 +22,10 @@ Ethereum module for restless. Uses [ethers.js](https://docs.ethers.io/ethers.js/
 Accepts any string that represents a valid ethereum address. Checks the checksum if present. Returns a normalized representation.
 
 ```javascript
-asEthAddress('0xA5fE...f213') // OK 0xA5fE...f213
-asEthAddress('0xa5fe...f213') // OK 0xA5fE...f213
-asEthAddress('bla bla bla') // FAIL (not an ethereum address)
-asBigNumber(123) // FAIL (not a string)
+asEthAddress('0xA5fE...f213') // RIGHT 0xA5fE...f213
+asEthAddress('0xa5fe...f213') // RIGHT 0xA5fE...f213
+asEthAddress('bla bla bla') // LEFT 'expected: ethereum address'
+asBigNumber(123) // LEFT 'expected: ethereum address'
 ```
 
 ### `asBigNumber`
@@ -33,8 +33,8 @@ asBigNumber(123) // FAIL (not a string)
 Accepts any string or number that represents an integer. Converts the integer to a [BigNumber](https://docs.ethers.io/ethers.js/html/api-utils.html#big-numbers).
 
 ```javascript
-asBigNumber('123') // OK BigNumber(123)
-asBigNumber(456) // OK BigNumber(456)
-asBigNumber(1.5) // FAIL (not an integer)
-asBigNumber(true) // FAIL (not a string or number)
+asBigNumber('123') // RIGHT BigNumber(123)
+asBigNumber(456) // RIGHT BigNumber(456)
+asBigNumber(1.5) // LEFT 'expected: big number'
+asBigNumber(true) // LEFT 'expected: big number'
 ```
