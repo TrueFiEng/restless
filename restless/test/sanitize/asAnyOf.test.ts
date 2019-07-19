@@ -1,10 +1,10 @@
 import { expect } from 'chai'
+import { asArray } from '../../src'
 import { asAnyOf } from '../../src/sanitize/asAnyOf'
 import { asBoolean } from '../../src/sanitize/asBoolean'
 import { asNumber } from '../../src/sanitize/asNumber'
 import { asString } from '../../src/sanitize/asString'
 import { Either } from '../../src/sanitize/sanitizer'
-import { asArray } from '../../src';
 
 describe('asAnyOf', () => {
   it('should work with one failing nested sanitizer', async () => {
