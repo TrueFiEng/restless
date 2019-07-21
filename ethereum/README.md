@@ -15,6 +15,13 @@ Ethereum module for restless. Uses [ethers.js](https://docs.ethers.io/ethers.js/
 1. [`asEthAddress`](#asethaddress)
 1. [`asBigNumber`](#asbignumber)
 
+## Installation
+
+```
+npm install @restless/ethereum
+yarn add @restless/ethereum
+```
+
 ## Sanitizers
 
 ### `asEthAddress`
