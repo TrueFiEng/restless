@@ -1,29 +1,26 @@
 import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
 
 interface AsAnyOf {
-  <A> (a: Sanitizer<A>): Sanitizer<A>
-  <A, B> (a: Sanitizer<A>, b: Sanitizer<B>): Sanitizer<A | B>
-  <A, B, C> (a: Sanitizer<A>, b: Sanitizer<B>, c: Sanitizer<C>): Sanitizer<A | B | C>
-  <A, B, C, D> (a: Sanitizer<A>, b: Sanitizer<B>, c: Sanitizer<C>, d: Sanitizer<D>): Sanitizer<A | B | C | D>
-  <A, B, C, D, E> (a: Sanitizer<A>, b: Sanitizer<B>, c: Sanitizer<C>, d: Sanitizer<D>, e: Sanitizer<E>):
-    Sanitizer<A | B | C | D | E>
-
-  <A, B, C, D, E, F> (
-    a: Sanitizer<A>, b: Sanitizer<B>, c: Sanitizer<C>, d: Sanitizer<D>, e: Sanitizer<E>, f: Sanitizer<F>
-  ): Sanitizer<A | B | C | D | E | F>
-
-  (firstSanitizer: Sanitizer<any>, ...nextSanitizers: Array<Sanitizer<any>>): Sanitizer<any>
+  <A> (sanitizers: Array<Sanitizer<A>>, expected?: string): Sanitizer<A>
+  <A, B> (sanitizers: Array<Sanitizer<A | B>>, expected?: string): Sanitizer<A | B>
+  <A, B, C> (sanitizers: Array<Sanitizer<A | B | C>>, expected?: string): Sanitizer<A | B | C>
+  <A, B, C, D> (sanitizers: Array<Sanitizer<A | B | C | D>>, expected?: string): Sanitizer<A | B | C | D>
+  (sanitizers: Array<Sanitizer<any>>, expected?: string): Sanitizer<any>
 }
 
-export const asAnyOf: AsAnyOf = (...sanitizers: Array<Sanitizer<any>>): Sanitizer<any> =>
+export const asAnyOf: AsAnyOf = (
+  sanitizers: Array<Sanitizer<any>>,
+  expected: string = 'as any of'
+): Sanitizer<any> =>
   (value, path) => {
-    const errors: SanitizerFailure[] = []
+    if (sanitizers.length === 0) {
+      return Either.right(value)
+    }
     for (const sanitizer of sanitizers) {
       const result = sanitizer(value, path)
       if (Either.isRight(result)) {
         return result
       }
-      errors.push(...result.left)
     }
-    return Either.left(errors)
+    return Either.left([{ path, expected }])
   }
