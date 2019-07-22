@@ -70,12 +70,4 @@ describe('asAnyOf', () => {
     expect(asAnyOf([asString, asNumber], 'as any of')('1', 'path'))
       .to.deep.equal(Either.right('1'))
   })
-
-  it('should work with empty array of sanitizers', async () => {
-    const mySanitizer = asAnyOf([], 'as any of')
-    const result = mySanitizer('1', 'path')
-    expect(result).to.deep.equal(
-      Either.right('1')
-    )
-  })
 })
