@@ -16,6 +16,13 @@ This is a monorepo for Restless project. Restless is a library for writing safe 
 2. Declarative
 3. Type safe
 
+## Installation
+
+```
+npm install @restless/restless
+yarn add @restless/restless
+```
+
 ## Packages
 
 Included packages:

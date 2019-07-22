@@ -37,6 +37,13 @@ GET /add/1/2 -> 200: 3
 GET /add/foo/2 -> 400: { path: 'params.a', expected: 'number' }
 ```
 
+## Installation
+
+```
+npm install @restless/restless
+yarn add @restless/restless
+```
+
 ## Api
 
 - [`asyncHandler`](#asynchandler)
