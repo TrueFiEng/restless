@@ -1,16 +1,20 @@
 import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
 
+type NonEmptyArray<T> = [T, ...T[]]
+
 interface AsAnyOf {
-  <A> (sanitizers: Array<Sanitizer<A>>, expected?: string): Sanitizer<A>
-  <A, B> (sanitizers: Array<Sanitizer<A | B>>, expected?: string): Sanitizer<A | B>
-  <A, B, C> (sanitizers: Array<Sanitizer<A | B | C>>, expected?: string): Sanitizer<A | B | C>
-  <A, B, C, D> (sanitizers: Array<Sanitizer<A | B | C | D>>, expected?: string): Sanitizer<A | B | C | D>
-  (sanitizers: Array<Sanitizer<any>>, expected?: string): Sanitizer<any>
+  <A> (sanitizers: [Sanitizer<A>], expected: string): Sanitizer<A>
+  <A, B> (sanitizers: [Sanitizer<A>, Sanitizer<B>], expected: string): Sanitizer<A | B>
+  <A, B, C> (sanitizers: [Sanitizer<A>, Sanitizer<B>, Sanitizer<C>], expected: string): Sanitizer<A | B | C>
+  <A, B, C, D> (sanitizers: [Sanitizer<A>, Sanitizer<B>, Sanitizer<C>, Sanitizer<D>], expected: string):
+    Sanitizer<A | B | C | D>
+
+  (sanitizers: NonEmptyArray<Sanitizer<any>>, expected: string): Sanitizer<any>
 }
 
 export const asAnyOf: AsAnyOf = (
   sanitizers: Array<Sanitizer<any>>,
-  expected: string = 'as any of'
+  expected: string
 ): Sanitizer<any> =>
   (value, path) => {
     if (sanitizers.length === 0) {
