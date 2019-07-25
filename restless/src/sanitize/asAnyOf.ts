@@ -1,13 +1,12 @@
-import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
+import { Either, Sanitizer, Schema } from './sanitizer'
 
 type NonEmptyArray<T> = [T, ...T[]]
-type MapSanitizer<T> = { [K in keyof T]: Sanitizer<T[K]> }
 
 interface AsAnyOf {
-  <A> (sanitizers: MapSanitizer<[A]>, expected: string): Sanitizer<A>
-  <A, B> (sanitizers: MapSanitizer<[A, B]>, expected: string): Sanitizer<A | B>
-  <A, B, C> (sanitizers: MapSanitizer<[A, B, C]>, expected: string): Sanitizer<A | B | C>
-  <A, B, C, D> (sanitizers: MapSanitizer<[A, B, C, D]>, expected: string): Sanitizer<A | B | C | D>
+  <A> (sanitizers: Schema<[A]>, expected: string): Sanitizer<A>
+  <A, B> (sanitizers: Schema<[A, B]>, expected: string): Sanitizer<A | B>
+  <A, B, C> (sanitizers: Schema<[A, B, C]>, expected: string): Sanitizer<A | B | C>
+  <A, B, C, D> (sanitizers: Schema<[A, B, C, D]>, expected: string): Sanitizer<A | B | C | D>
 
   (sanitizers: NonEmptyArray<Sanitizer<any>>, expected: string): Sanitizer<any>
 }
