@@ -281,7 +281,7 @@ sanitizer('a') // LEFT 'expected: number'
 
 ### `asAnyOf`
 
-This higher-order sanitizer accepts any value that is successfully sanitized through any of the sanitizers passed as an array argument. In case of multiple passing sanitizers, first one is used. A second argument that specifies an optional expected message can be provided.
+This higher-order sanitizer accepts any value that is successfully sanitized through any of the sanitizers passed as an array argument. In case of multiple passing sanitizers, first one is used. A second argument specifies expected message.
 
 ```javascript
 const sanitizer = asAnyOf([asNumber, asString], 'a string or a number')
