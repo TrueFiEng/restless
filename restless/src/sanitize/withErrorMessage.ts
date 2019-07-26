@@ -4,7 +4,7 @@ export const withErrorMessage = <T>(sanitizer: Sanitizer<T>, expected: string): 
   (value, path) => {
     const result = sanitizer(value, path)
     if (Either.isLeft(result)) {
-      return Either.left([{ expected, path }])
+      return Either.left([{ path, expected }])
     } else {
       return result
     }

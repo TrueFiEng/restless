@@ -4,15 +4,15 @@ import { asNumber, asObject, Either, withErrorMessage } from '../../src'
 describe('withErrorMessage', () => {
   it('returns set error message if sanitizer fails', () => {
     const sanitizer = withErrorMessage(asObject({ a: asNumber }), 'foo')
-    const res = { a: 'not a number' }
-
-    expect(sanitizer(res, 'path')).to.equal(Either.left([{ expected: 'foo', path: 'path' }]))
+    const result = sanitizer({ a: 'not a number' }, 'path')
+    expect(result).to.equal(
+      Either.left([{ path: 'path', expected: 'foo' }])
+    )
   })
 
   it('returns data if sanitization succeeded', () => {
     const sanitizer = withErrorMessage(asObject({ a: asNumber }), 'foo')
-    const res = { a: 42 }
-
-    expect(sanitizer(res, 'path')).to.equal(Either.right(42))
+    const result = sanitizer({ a: 42 }, 'path')
+    expect(result).to.equal(Either.right({ a: 42 }))
   })
 })
