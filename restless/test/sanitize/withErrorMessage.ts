@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { asNumber, asObject, withErrorMessage, Either } from "../../src";
+import { asNumber, asObject, Either, withErrorMessage } from '../../src'
 
 describe('withErrorMessage', () => {
   it('returns set error message if sanitizer fails', () => {

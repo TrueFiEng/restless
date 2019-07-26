@@ -1,8 +1,8 @@
-import { Sanitizer, Either } from "./sanitizer";
+import { Either, Sanitizer } from './sanitizer'
 
 export const withErrorMessage = <T>(
   sanitizer: Sanitizer<T>,
-  expected: string,
+  expected: string
 ): Sanitizer<T> => {
   return (value, path) => {
     const result = sanitizer(value, path)
