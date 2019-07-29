@@ -291,3 +291,14 @@ sanitizer('123') // RIGHT 123
 sanitizer(123) // RIGHT 123
 sanitizer({}) // LEFT 'expected: a string or a number'
 ```
+
+### `withErrorMessage`
+
+This higher-order sanitizer will act just like the sanitizer passed as an argument, but will change the error value to contain a different `expected` message.
+
+```javascript
+const sanitizer = withErrorMessage(asString, 'bla bla')
+
+sanitizer('abcdef') // RIGHT 'abcdef'
+sanitizer(123) // LEFT 'expected: bla bla'
+```
