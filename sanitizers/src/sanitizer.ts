@@ -2,10 +2,10 @@ export type Either<L, R> = { left: L } | { right: R }
 export const Either = {
   left: <L>(left: L) => ({ left }),
   right: <R>(right: R) => ({ right }),
-  isLeft<L>(value: Either<L, any>): value is ({ left: L }) {
+  isLeft<L> (value: Either<L, any>): value is ({ left: L }) {
     return Object.hasOwnProperty.call(value, 'left')
   },
-  isRight<R>(value: Either<any, R>): value is ({ right: R }) {
+  isRight<R> (value: Either<any, R>): value is ({ right: R }) {
     return Object.hasOwnProperty.call(value, 'right')
   }
 }
@@ -22,9 +22,8 @@ export type SchemaResult<S> = {
 }
 
 export class SanitizeError extends Error {
-  constructor(public errors: SanitizerFailure[]) {
+  constructor (public errors: SanitizerFailure[]) {
     super('Sanitize failed')
     Object.setPrototypeOf(this, SanitizeError.prototype)
   }
 }
-
