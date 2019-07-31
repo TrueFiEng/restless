@@ -10,9 +10,9 @@ const isBooleanString = (value: unknown): value is string =>
 
 export const asBoolean: Sanitizer<boolean> = (value, path) => {
   if (isBoolean(value)) {
-    return Result.right(value)
+    return Result.ok(value)
   } else if (isBooleanString(value)) {
-    return Result.right(value === 'true')
+    return Result.ok(value === 'true')
   }
-  return Result.left([{ path, expected: 'boolean' }])
+  return Result.error([{ path, expected: 'boolean' }])
 }

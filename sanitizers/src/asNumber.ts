@@ -10,9 +10,9 @@ const isNumberString = (value: unknown): value is string =>
 
 export const asNumber: Sanitizer<number> = (value, path) => {
   if (isNumber(value)) {
-    return Result.right(value)
+    return Result.ok(value)
   } else if (isNumberString(value)) {
-    return Result.right(+value)
+    return Result.ok(+value)
   }
-  return Result.left([{ path, expected: 'number' }])
+  return Result.error([{ path, expected: 'number' }])
 }

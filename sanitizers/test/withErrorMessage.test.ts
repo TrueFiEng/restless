@@ -6,13 +6,13 @@ describe('withErrorMessage', () => {
     const sanitizer = withErrorMessage(asObject({ a: asNumber }), 'foo')
     const result = sanitizer({ a: 'not a number' }, 'path')
     expect(result).to.deep.equal(
-      Result.left([{ path: 'path', expected: 'foo' }])
+      Result.error([{ path: 'path', expected: 'foo' }])
     )
   })
 
   it('returns data if sanitization succeeded', () => {
     const sanitizer = withErrorMessage(asObject({ a: asNumber }), 'foo')
     const result = sanitizer({ a: 42 }, 'path')
-    expect(result).to.deep.equal(Result.right({ a: 42 }))
+    expect(result).to.deep.equal(Result.ok({ a: 42 }))
   })
 })

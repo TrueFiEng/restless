@@ -1,12 +1,12 @@
-export type Result<L, R> = { left: L } | { right: R }
+export type Result<E, D> = { error: E } | { data: D }
 export const Result = {
-  left: <L>(left: L) => ({ left }),
-  right: <R>(right: R) => ({ right }),
-  isLeft<L> (value: Result<L, any>): value is ({ left: L }) {
-    return Object.hasOwnProperty.call(value, 'left')
+  error: <E>(error: E) => ({ error }),
+  ok: <D>(data: D) => ({ data }),
+  isError<L>(value: Result<L, any>): value is ({ error: L }) {
+    return Object.hasOwnProperty.call(value, 'error')
   },
-  isRight<R> (value: Result<any, R>): value is ({ right: R }) {
-    return Object.hasOwnProperty.call(value, 'right')
+  isOk<R>(value: Result<any, R>): value is ({ data: R }) {
+    return Object.hasOwnProperty.call(value, 'data')
   }
 }
 
@@ -22,7 +22,7 @@ export type SchemaResult<S> = {
 }
 
 export class SanitizeError extends Error {
-  constructor (public errors: SanitizerFailure[]) {
+  constructor(public errors: SanitizerFailure[]) {
     super('Sanitize failed')
     Object.setPrototypeOf(this, SanitizeError.prototype)
   }

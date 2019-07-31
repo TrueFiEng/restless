@@ -3,10 +3,10 @@ import { Result, Sanitizer, Schema } from './sanitizer'
 type NonEmptyArray<T> = [T, ...T[]]
 
 interface AsAnyOf {
-  <A> (sanitizers: Schema<[A]>, expected: string): Sanitizer<A>
-  <A, B> (sanitizers: Schema<[A, B]>, expected: string): Sanitizer<A | B>
-  <A, B, C> (sanitizers: Schema<[A, B, C]>, expected: string): Sanitizer<A | B | C>
-  <A, B, C, D> (sanitizers: Schema<[A, B, C, D]>, expected: string): Sanitizer<A | B | C | D>
+  <A>(sanitizers: Schema<[A]>, expected: string): Sanitizer<A>
+  <A, B>(sanitizers: Schema<[A, B]>, expected: string): Sanitizer<A | B>
+  <A, B, C>(sanitizers: Schema<[A, B, C]>, expected: string): Sanitizer<A | B | C>
+  <A, B, C, D>(sanitizers: Schema<[A, B, C, D]>, expected: string): Sanitizer<A | B | C | D>
 
   (sanitizers: NonEmptyArray<Sanitizer<any>>, expected: string): Sanitizer<any>
 }
@@ -17,13 +17,13 @@ export const asAnyOf: AsAnyOf = (
 ): Sanitizer<any> =>
   (value, path) => {
     if (sanitizers.length === 0) {
-      return Result.right(value)
+      return Result.ok(value)
     }
     for (const sanitizer of sanitizers) {
       const result = sanitizer(value, path)
-      if (Result.isRight(result)) {
+      if (Result.isOk(result)) {
         return result
       }
     }
-    return Result.left([{ path, expected }])
+    return Result.error([{ path, expected }])
   }
