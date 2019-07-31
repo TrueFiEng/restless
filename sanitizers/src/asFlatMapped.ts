@@ -1,11 +1,11 @@
-import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
+import { Result, Sanitizer, SanitizerFailure } from './sanitizer'
 
 export const asFlatMapped = <T, U> (
   sanitizer: Sanitizer<T>,
-  flatMapFn: (value: T, path: string) => Either<SanitizerFailure[], U>
+  flatMapFn: (value: T, path: string) => Result<SanitizerFailure[], U>
 ): Sanitizer<U> => (value, path) => {
   const result = sanitizer(value, path)
-  if (Either.isRight(result)) {
+  if (Result.isRight(result)) {
     return flatMapFn(result.right, path)
   }
   return result

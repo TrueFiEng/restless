@@ -1,6 +1,6 @@
-import { Either, Sanitizer } from './sanitizer'
+import { Result, Sanitizer } from './sanitizer'
 
 export const asString: Sanitizer<string> = (value, path) =>
   typeof value === 'string'
-    ? Either.right(value)
-    : Either.left([{ path, expected: 'string' }])
+    ? Result.right(value)
+    : Result.left([{ path, expected: 'string' }])

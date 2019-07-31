@@ -1,6 +1,6 @@
-import { Either, Sanitizer } from './sanitizer'
+import { Result, Sanitizer } from './sanitizer'
 
 export const asMatching = (re: RegExp, message?: string): Sanitizer<string> =>
   (value, path) => typeof value === 'string' && re.test(value)
-    ? Either.right(value)
-    : Either.left([{ path, expected: message || `string matching ${re}` }])
+    ? Result.right(value)
+    : Result.left([{ path, expected: message || `string matching ${re}` }])

@@ -1,4 +1,4 @@
-import { Either, Sanitizer, Schema } from './sanitizer'
+import { Result, Sanitizer, Schema } from './sanitizer'
 
 type NonEmptyArray<T> = [T, ...T[]]
 
@@ -17,13 +17,13 @@ export const asAnyOf: AsAnyOf = (
 ): Sanitizer<any> =>
   (value, path) => {
     if (sanitizers.length === 0) {
-      return Either.right(value)
+      return Result.right(value)
     }
     for (const sanitizer of sanitizers) {
       const result = sanitizer(value, path)
-      if (Either.isRight(result)) {
+      if (Result.isRight(result)) {
         return result
       }
     }
-    return Either.left([{ path, expected }])
+    return Result.left([{ path, expected }])
   }

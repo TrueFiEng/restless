@@ -1,4 +1,4 @@
-export { Either, Sanitizer, SanitizerFailure, SanitizeError, Schema, SchemaResult } from './sanitizer'
+export { Result, Sanitizer, SanitizerFailure, SanitizeError, Schema, SchemaResult } from './sanitizer'
 export { asString } from './asString'
 export { asNumber } from './asNumber'
 export { asBoolean } from './asBoolean'

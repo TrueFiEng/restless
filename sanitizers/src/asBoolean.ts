@@ -1,4 +1,4 @@
-import { Either, Sanitizer } from './sanitizer'
+import { Result, Sanitizer } from './sanitizer'
 
 const BOOLEAN_REGEX = /^(true|false)$/
 
@@ -10,9 +10,9 @@ const isBooleanString = (value: unknown): value is string =>
 
 export const asBoolean: Sanitizer<boolean> = (value, path) => {
   if (isBoolean(value)) {
-    return Either.right(value)
+    return Result.right(value)
   } else if (isBooleanString(value)) {
-    return Either.right(value === 'true')
+    return Result.right(value === 'true')
   }
-  return Either.left([{ path, expected: 'boolean' }])
+  return Result.left([{ path, expected: 'boolean' }])
 }

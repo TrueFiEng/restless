@@ -1,17 +1,17 @@
-export type Either<L, R> = { left: L } | { right: R }
-export const Either = {
+export type Result<L, R> = { left: L } | { right: R }
+export const Result = {
   left: <L>(left: L) => ({ left }),
   right: <R>(right: R) => ({ right }),
-  isLeft<L> (value: Either<L, any>): value is ({ left: L }) {
+  isLeft<L> (value: Result<L, any>): value is ({ left: L }) {
     return Object.hasOwnProperty.call(value, 'left')
   },
-  isRight<R> (value: Either<any, R>): value is ({ right: R }) {
+  isRight<R> (value: Result<any, R>): value is ({ right: R }) {
     return Object.hasOwnProperty.call(value, 'right')
   }
 }
 
 export interface SanitizerFailure { path: string, expected: string }
-export type Sanitizer<T> = (value: unknown, path: string) => Either<SanitizerFailure[], T>
+export type Sanitizer<T> = (value: unknown, path: string) => Result<SanitizerFailure[], T>
 
 export type Schema<T> = {
   [K in keyof T]: Sanitizer<T[K]>

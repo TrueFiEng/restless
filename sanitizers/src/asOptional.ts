@@ -1,6 +1,6 @@
-import { Either, Sanitizer } from './sanitizer'
+import { Result, Sanitizer } from './sanitizer'
 
 export const asOptional = <T> (sanitizer: Sanitizer<T>): Sanitizer<T | undefined> =>
   (value, path) => value == null
-    ? Either.right(undefined)
+    ? Result.right(undefined)
     : sanitizer(value, path)

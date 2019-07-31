@@ -149,12 +149,12 @@ sanitizer('a') // LEFT 'expected: number'
 
 ### `asFlatMapped`
 
-This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return either a new value or an error.
+This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return Result a new value or an error.
 
 ```javascript
 const sanitizer = asMapped(asNumber, (value, path) => x > 1
-  ? Either.right(value)
-  : Either.left([{ path, expected: 'number > 1' }])
+  ? Result.right(value)
+  : Result.left([{ path, expected: 'number > 1' }])
 )
 
 sanitizer(123) // RIGHT 123

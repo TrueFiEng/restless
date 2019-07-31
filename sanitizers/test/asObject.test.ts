@@ -1,18 +1,18 @@
 import { expect } from 'chai'
-import { asNumber, asObject, asString, Either } from '../src'
+import { asNumber, asObject, asString, Result } from '../src'
 
 describe('asObject', () => {
   it('sanitizes objects', async () => {
     const asMyObject = asObject({})
     const result = asMyObject({}, '')
-    expect(result).to.deep.equal(Either.right({}))
+    expect(result).to.deep.equal(Result.right({}))
   })
 
   it('does not-accept non-objects', async () => {
     const asMyObject = asObject({})
     const result = asMyObject(123, 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'object' }])
+      Result.left([{ path: 'path', expected: 'object' }])
     )
   })
 
@@ -25,13 +25,13 @@ describe('asObject', () => {
     })
     const value = { foo: 123, bar: { baz: 'baz' } }
     const result = asMyObject(value, 'path')
-    expect(result).to.deep.equal(Either.right(value))
+    expect(result).to.deep.equal(Result.right(value))
   })
 
   it('removes unknown properties', async () => {
     const asMyObject = asObject({ x: asNumber })
     const result = asMyObject({ x: 1, y: 'foo' }, 'path')
-    expect(result).to.deep.equal(Either.right({ x: 1 }))
+    expect(result).to.deep.equal(Result.right({ x: 1 }))
   })
 
   it('returns errors from nested sanitizers', async () => {
@@ -43,7 +43,7 @@ describe('asObject', () => {
     })
     const value = { foo: false, bar: {} }
     const result = asMyObject(value, 'path')
-    expect(result).to.deep.equal(Either.left([
+    expect(result).to.deep.equal(Result.left([
       { path: 'path.foo', expected: 'number' },
       { path: 'path.bar.baz', expected: 'string' }
     ]))

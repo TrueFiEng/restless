@@ -1,4 +1,4 @@
-import { Either, Sanitizer } from './sanitizer'
+import { Result, Sanitizer } from './sanitizer'
 
 export const asChecked = <T> (
   sanitizer: Sanitizer<T>,
@@ -6,8 +6,8 @@ export const asChecked = <T> (
   expected: string = 'custom logic'
 ): Sanitizer<T> => (value, path) => {
   const result = sanitizer(value, path)
-  if (Either.isRight(result) && !predicate(result.right)) {
-    return Either.left([{ path, expected }])
+  if (Result.isRight(result) && !predicate(result.right)) {
+    return Result.left([{ path, expected }])
   }
   return result
 }

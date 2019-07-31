@@ -1,21 +1,21 @@
-import { Either, Sanitizer, SanitizerFailure } from './sanitizer'
+import { Result, Sanitizer, SanitizerFailure } from './sanitizer'
 
 export const asArray = <T> (sanitizer: Sanitizer<T>): Sanitizer<T[]> =>
   (value, path) => {
     if (!Array.isArray(value)) {
-      return Either.left([{ path, expected: 'array' }])
+      return Result.left([{ path, expected: 'array' }])
     }
     const results: T[] = []
     const errors: SanitizerFailure[] = []
     for (let i = 0; i < value.length; i++) {
       const result = sanitizer(value[i], `${path}[${i}]`)
-      if (Either.isRight(result)) {
+      if (Result.isRight(result)) {
         results.push(result.right)
       } else {
         errors.push(...result.left)
       }
     }
     return errors.length > 0
-      ? Either.left(errors)
-      : Either.right(results)
+      ? Result.left(errors)
+      : Result.right(results)
   }

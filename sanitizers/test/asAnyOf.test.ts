@@ -1,12 +1,12 @@
 import { expect } from 'chai'
-import { asAnyOf, asArray, asBoolean, asNumber, asString, Either } from '../src'
+import { asAnyOf, asArray, asBoolean, asNumber, asString, Result } from '../src'
 
 describe('asAnyOf', () => {
   it('should work with one failing nested sanitizer', async () => {
     const mySanitizer = asAnyOf([asBoolean], 'as any of')
     const result = mySanitizer('1', 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'as any of' }])
+      Result.left([{ path: 'path', expected: 'as any of' }])
     )
   })
 
@@ -14,7 +14,7 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asNumber], 'as any of')
     const result = mySanitizer('1', 'path')
     expect(result).to.deep.equal(
-      Either.right(1)
+      Result.right(1)
     )
   })
 
@@ -22,7 +22,7 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asNumber, asBoolean, asBoolean, asBoolean], 'as any of')
     const result = mySanitizer('1', 'path')
     expect(result).to.deep.equal(
-      Either.right(1)
+      Result.right(1)
     )
   })
 
@@ -30,7 +30,7 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asBoolean, asBoolean, asBoolean, asNumber], 'as any of')
     const result = mySanitizer('1', 'path')
     expect(result).to.deep.equal(
-      Either.right(1)
+      Result.right(1)
     )
   })
 
@@ -38,7 +38,7 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asBoolean, asNumber, asBoolean, asBoolean], 'as any of')
     const result = mySanitizer('1', 'path')
     expect(result).to.deep.equal(
-      Either.right(1)
+      Result.right(1)
     )
   })
 
@@ -46,7 +46,7 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asBoolean, asString], 'as any of')
     const result = mySanitizer(1, 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'as any of' }])
+      Result.left([{ path: 'path', expected: 'as any of' }])
     )
   })
 
@@ -54,15 +54,15 @@ describe('asAnyOf', () => {
     const mySanitizer = asAnyOf([asArray(asString), asArray(asNumber)], 'as any of')
     const result = mySanitizer([1, 'x'], 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'as any of' }])
+      Result.left([{ path: 'path', expected: 'as any of' }])
     )
   })
 
   it('should take the first of multiple passing nested sanitizers', async () => {
     expect(asAnyOf([asNumber, asString], 'as any of')('1', 'path'))
-      .to.deep.equal(Either.right(1))
+      .to.deep.equal(Result.right(1))
 
     expect(asAnyOf([asString, asNumber], 'as any of')('1', 'path'))
-      .to.deep.equal(Either.right('1'))
+      .to.deep.equal(Result.right('1'))
   })
 })
