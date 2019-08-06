@@ -1,4 +1,4 @@
-import { Either, Sanitizer } from './model'
+import { Result, Sanitizer } from './model'
 
 const NUMBER_REGEX = /^-?\d*(\.\d+)?$/
 
@@ -10,9 +10,9 @@ const isNumberString = (value: unknown): value is string =>
 
 export const asNumber: Sanitizer<number> = (value, path) => {
   if (isNumber(value)) {
-    return Either.right(value)
+    return Result.ok(value)
   } else if (isNumberString(value)) {
-    return Either.right(+value)
+    return Result.ok(+value)
   }
-  return Either.left([{ path, expected: 'number' }])
+  return Result.error([{ path, expected: 'number' }])
 }
