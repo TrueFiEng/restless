@@ -1,11 +1,11 @@
+import { asNumber, asObject, asString } from '@restless/sanitizers'
 import bodyParser from 'body-parser'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express, { ErrorRequestHandler, Request } from 'express'
-import { asNumber, asObject, asString } from '../../src'
-import { asyncHandler } from '../../src/asyncHandler'
-import { responseOf } from '../../src/response'
-import { sanitize, SanitizeError } from '../../src/sanitize/sanitize'
+import { asyncHandler } from '../src/asyncHandler'
+import { responseOf } from '../src/response'
+import { sanitize, SanitizeError } from '../src/sanitize'
 
 chai.use(chaiHttp)
 
