@@ -3,10 +3,10 @@ export const Result = {
   error: <E> (error: E) => ({ error }),
   ok: <T> (ok: T) => ({ ok }),
   isError<E> (value: Result<E, any>): value is ({ error: E }) {
-    return Object.hasOwnProperty.call(value, 'left')
+    return Object.hasOwnProperty.call(value, 'error')
   },
   isOk<T> (value: Result<any, T>): value is ({ ok: T }) {
-    return Object.hasOwnProperty.call(value, 'right')
+    return Object.hasOwnProperty.call(value, 'ok')
   }
 }
 

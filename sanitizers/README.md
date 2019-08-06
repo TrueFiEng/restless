@@ -21,6 +21,7 @@ yarn add @restless/sanitizers
 
 ## Api
 
+- [`cast`](#cast)
 - [`asString`](#asstring)
 - [`asNumber`](#assumber)
 - [`asBoolean`](#asboolean)
@@ -33,6 +34,15 @@ yarn add @restless/sanitizers
 - [`asFlatMapped`](#asflatmapped)
 - [`asAnyOf`](#asanyof)
 - [`withErrorMessage`](#witherrormessage)
+
+### `cast`
+
+Accepts a value and applies a sanitizer to it resulting in returning the sanitized value or throwing a TypeError.
+
+```javascript
+cast('123', asNumber) // 123
+cast('foo', asNumber) // TypeError
+```
 
 ### `asString`
 
