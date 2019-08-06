@@ -1,6 +1,6 @@
 {
   "name": "@restless/ethereum",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Ethereum utilities for restless",
   "license": "Unlicense",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "ethers": "^4.0.0",
-    "@restless/restless": "^0.3.0"
+    "@restless/sanitizers": "^0.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
