@@ -1,5 +1,5 @@
+import { Either, SanitizerFailure, Schema, SchemaResult } from '@restless/sanitizers'
 import { Request } from 'express'
-import { Either, SanitizerFailure, Schema, SchemaResult } from './sanitizer'
 
 export class SanitizeError extends Error {
   constructor (public errors: SanitizerFailure[]) {

@@ -1,12 +1,6 @@
+import { asNumber, asObject, asString } from '@restless/sanitizers'
 import { Request } from 'express'
-import {
-  asNumber,
-  asObject,
-  asString,
-  asyncHandler,
-  responseOf,
-  sanitize
-} from '../src'
+import { asyncHandler, responseOf, sanitize } from '../src'
 
 describe('Type declarations', () => {
   it('handles normal use case', async () => {
