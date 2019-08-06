@@ -39,8 +39,8 @@ yarn add @restless/sanitizers
 Accepts any value that is a string. Returns a string.
 
 ```javascript
-asString('asd') // RIGHT 'asd'
-asString(123) // LEFT 'expected: string'
+asString('asd', 'path') // Result.ok('asd')
+asString(123, 'path') // Result.error([{expected: 'string', path: 'path'}])
 ```
 
 ### `asNumber`
@@ -48,10 +48,10 @@ asString(123) // LEFT 'expected: string'
 Accepts any value that is a number or a string that represents a number. Returns a number.
 
 ```javascript
-asNumber(123) // RIGHT 123
-asNumber('0.2') // RIGHT 0.2
-asNumber('boo') // LEFT 'expected: number'
-asNumber({}) // LEFT 'expected: number'
+asNumber(123, 'path') // Result.ok(123)
+asNumber('0.2', 'path') // Result.ok(0.2)
+asNumber('boo', 'path') // Result.error([{expected: 'number', path: 'path'}])
+asNumber({}, 'path') // Result.error([{expected: 'number', path: 'path'}])
 ```
 
 ### `asBoolean`
@@ -59,10 +59,10 @@ asNumber({}) // LEFT 'expected: number'
 Accepts any value that is a number or a string that represents a boolean (`"true"` or `"false"`). Returns a number.
 
 ```javascript
-asBoolean(true) // RIGHT true
-asBoolean('false') // RIGHT false
-asBoolean('boo') // LEFT 'expected: boolean'
-asBoolean(123) // LEFT 'expected: boolean'
+asBoolean(true, 'path') // Result.ok(true)
+asBoolean('false', 'path') // Result.ok(false)
+asBoolean('boo', 'path') // Result.error([{expected: 'boolean', path: 'path'}])
+asBoolean(123, 'path') // Result.error([{expected: 'boolean', path: 'path'}])
 ```
 
 ### `asMatching`
@@ -72,9 +72,9 @@ This higher-order sanitizer accepts values that are strings matching the regex p
 ```javascript
 const sanitizer = asMatching(/aaa/, 'custom message')
 
-sanitizer('aaa') // RIGHT 'aaa'
-sanitizer(123) // LEFT 'expected: custom message'
-sanitizer('b') // LEFT 'expected: custom message'
+sanitizer('aaa', 'path') // Result.ok('aaa')
+sanitizer(123, 'path') // Result.error([{expected: 'custom message', path: 'path'}])
+sanitizer('b', 'path') // Result.error([{expected: 'custom message', path: 'path'}])
 ```
 
 ### `asObject`
@@ -84,10 +84,14 @@ This higher-order sanitizer requires a schema in the form of an object. Values o
 ```javascript
 const sanitizer = asObject({ foo: asNumber, bar: asString })
 
-sanitizer({ foo: 1, bar: 'a' }) // RIGHT { foo: 1, bar: 'a' }
-sanitizer(123) // LEFT 'expected: object'
-sanitizer({}) // LEFT ['(.foo) expected: number', '(.bar) expected: string']
-sanitizer({ foo: true, bar: 'a' ) // LEFT '(.foo) expected: number'
+sanitizer({ foo: 1, bar: 'a' }, 'path') // Result.ok({ foo: 1, bar: 'a' })
+sanitizer(123, 'path') // Result.error([{expected: 'object', path: 'path'}])
+sanitizer({}, 'path')
+// Result.error([
+//   {expected: 'number', path: 'path.foo'},
+//   {expected: 'string', path: 'path.bar'}
+// ])
+sanitizer({ foo: true, bar: 'a' , 'path') // Result.error([{expected: 'number', path: 'path.foo'}])
 ```
 
 ### `asArray`
@@ -97,9 +101,9 @@ This higher-order sanitizer accepts any value that is an array of items that are
 ```javascript
 const sanitizer = asArray(asNumber)
 
-sanitizer([123, '45']) // RIGHT [123, 45]
-sanitizer(123) // LEFT 'expected: array'
-sanitizer([123, 'foo']) // LEFT '([0]) expected: number'
+sanitizer([123, '45'], 'path') // Result.ok([123, 45])
+sanitizer(123, 'path') // Result.error([{expected: 'array', path: 'path'}])
+sanitizer([123, 'foo'], 'path') // Result.error([{expected: 'number', path: 'path[0]'}])
 ```
 
 ### `asOptional`
@@ -109,10 +113,10 @@ This higher-order sanitizer accepts undefined or null or any value that is sanit
 ```javascript
 const sanitizer = asOptional(asString)
 
-sanitizer('abcdef') // RIGHT 'abcdef'
-sanitizer(null) // RIGHT undefined
-sanitizer(undefined) // RIGHT undefined
-sanitizer(123) // LEFT 'expected: string'
+sanitizer('abcdef', 'path') // Result.ok('abcdef')
+sanitizer(null, 'path') // Result.ok(undefined)
+sanitizer(undefined, 'path') // Result.ok(undefined)
+sanitizer(123, 'path') // Result.error([{expected: 'string', path: 'path'}])
 ```
 
 ### `asChecked`
@@ -122,13 +126,13 @@ This higher-order sanitizer accepts any value that is sanitized through the sani
 ```javascript
 const sanitizer = asChecked(asString, x => x.length > 3)
 
-sanitizer('abcdef') // RIGHT 'abcdef'
-sanitizer(123) // LEFT 'expected: string'
-sanitizer('a') // LEFT 'expected: custom logic'
+sanitizer('abcdef', 'path') // Result.ok('abcdef')
+sanitizer(123, 'path') // Result.error([{expected: 'string', path: 'path'}])
+sanitizer('a', 'path') // Result.error([{expected: 'custom logic', path: 'path'}])
 ```
 ```javascript
 const sanitizer = asChecked(asString, x => x.length > 3, 'string longer than 3')
-sanitizer('a') // LEFT 'expected: string longer than 3'
+sanitizer('a', 'path') // Result.error([{expected: 'string longer than 3', path: 'path'}])
 ```
 
 ### `asMapped`
@@ -138,24 +142,24 @@ This higher-order sanitizer accepts any value that is sanitized through the sani
 ```javascript
 const sanitizer = asMapped(asNumber, x => x > 1)
 
-sanitizer(123) // RIGHT true
-sanitizer(0) // RIGHT false
-sanitizer('a') // LEFT 'expected: number'
+sanitizer(123, 'path') // Result.ok(true)
+sanitizer(0, 'path') // Result.ok(false)
+sanitizer('a', 'path') // Result.error([{expected: 'number', path: 'path'}])
 ```
 
 ### `asFlatMapped`
 
-This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return either a new value or an error.
+This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return Result a new value or an error.
 
 ```javascript
 const sanitizer = asMapped(asNumber, (value, path) => x > 1
-  ? Either.right(value)
-  : Either.left([{ path, expected: 'number > 1' }])
+  ? Result.ok(value)
+  : Result.error([{ path, expected: 'number > 1' }])
 )
 
-sanitizer(123) // RIGHT 123
-sanitizer(0) // LEFT 'expected: number > 1'
-sanitizer('a') // LEFT 'expected: number'
+sanitizer(123, 'path') // Result.ok(123)
+sanitizer(0, 'path') // Result.error([{expected: 'number > 1', path: 'path'}])
+sanitizer('a', 'path') // Result.error([{expected: 'number', path: 'path'}])
 ```
 
 ### `asAnyOf`
@@ -165,10 +169,10 @@ This higher-order sanitizer accepts any value that is successfully sanitized thr
 ```javascript
 const sanitizer = asAnyOf([asNumber, asString], 'a string or a number')
 
-sanitizer('abcdef') // RIGHT 'abcdef'
-sanitizer('123') // RIGHT 123
-sanitizer(123) // RIGHT 123
-sanitizer({}) // LEFT 'expected: a string or a number'
+sanitizer('abcdef', 'path') // Result.ok('abcdef')
+sanitizer('123', 'path') // Result.ok(123)
+sanitizer(123, 'path') // Result.ok(123)
+sanitizer({}, 'path') // Result.error([{expected: 'a string or a number', path: 'path'}])
 ```
 
 ### `withErrorMessage`
@@ -178,6 +182,6 @@ This higher-order sanitizer will act just like the sanitizer passed as an argume
 ```javascript
 const sanitizer = withErrorMessage(asString, 'bla bla')
 
-sanitizer('abcdef') // RIGHT 'abcdef'
-sanitizer(123) // LEFT 'expected: bla bla'
+sanitizer('abcdef', 'path') // Result.ok('abcdef')
+sanitizer(123, 'path') // Result.error([{expected: 'bla bla', path: 'path'}])
 ```
