@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { asArray, asAnyOf, asBoolean, asNumber, asString, Either } from '../src'
+import { asAnyOf, asArray, asBoolean, asNumber, asString, Either } from '../src'
 
 describe('asAnyOf', () => {
   it('should work with one failing nested sanitizer', async () => {
