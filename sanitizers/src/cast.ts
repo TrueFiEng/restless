@@ -1,4 +1,4 @@
-import { Sanitizer, Result, SanitizerFailure } from './model'
+import { Result, Sanitizer, SanitizerFailure } from './model'
 
 export class CastError extends TypeError {
   constructor (public errors: SanitizerFailure[]) {
