@@ -1,4 +1,4 @@
-import { Either, Sanitizer } from '@restless/restless'
+import { Either, Sanitizer } from '@restless/sanitizers'
 import { utils } from 'ethers'
 
 export const asBigNumber: Sanitizer<utils.BigNumber> = (value, path) => {

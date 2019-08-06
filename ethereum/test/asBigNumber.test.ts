@@ -1,4 +1,4 @@
-import { Either } from '@restless/restless'
+import { Either } from '@restless/sanitizers'
 import { expect } from 'chai'
 import { utils } from 'ethers'
 import { asBigNumber } from '../src/asBigNumber'

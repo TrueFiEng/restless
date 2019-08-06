@@ -1,4 +1,4 @@
-import { Either } from '@restless/restless'
+import { Either } from '@restless/sanitizers'
 import { expect } from 'chai'
 import { Wallet } from 'ethers'
 import { asEthAddress } from '../src/asEthAddress'
