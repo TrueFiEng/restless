@@ -29,10 +29,10 @@ yarn add @restless/ethereum
 Accepts any string that represents a valid ethereum address. Checks the checksum if present. Returns a normalized representation.
 
 ```javascript
-asEthAddress('0xA5fE...f213') // RIGHT 0xA5fE...f213
-asEthAddress('0xa5fe...f213') // RIGHT 0xA5fE...f213
-asEthAddress('bla bla bla') // LEFT 'expected: ethereum address'
-asBigNumber(123) // LEFT 'expected: ethereum address'
+asEthAddress('0xA5fE...f213', 'path') // Result.ok(0xA5fE...f213)
+asEthAddress('0xa5fe...f213', 'path') // Result.ok(0xA5fE...f213)
+asEthAddress('bla bla bla', 'path') // Result.error([{expected: 'ethereum address', path: 'path'}])
+asEthAddress(123, 'path') // Result.error([{expected: 'ethereum address', path: 'path'}])
 ```
 
 ### `asBigNumber`
@@ -40,8 +40,8 @@ asBigNumber(123) // LEFT 'expected: ethereum address'
 Accepts any string or number that represents an integer. Converts the integer to a [BigNumber](https://docs.ethers.io/ethers.js/html/api-utils.html#big-numbers).
 
 ```javascript
-asBigNumber('123') // RIGHT BigNumber(123)
-asBigNumber(456) // RIGHT BigNumber(456)
-asBigNumber(1.5) // LEFT 'expected: big number'
-asBigNumber(true) // LEFT 'expected: big number'
+asBigNumber('123', 'path') // Result.ok(BigNumber(123))
+asBigNumber(456, 'path') // Result.ok(BigNumber(456))
+asBigNumber(1.5, 'path') // Result.error([{expected: 'big number', path: 'path'}])
+asBigNumber(true, 'path') // Result.error([{expected: 'big number', path: 'path'}])
 ```

@@ -1,11 +1,11 @@
-import { Either, Sanitizer } from '@restless/sanitizers'
+import { Result, Sanitizer } from '@restless/sanitizers'
 import { utils } from 'ethers'
 
 export const asBigNumber: Sanitizer<utils.BigNumber> = (value, path) => {
   try {
     if (typeof value === 'string' || typeof value === 'number') {
-      return Either.right(utils.bigNumberify(value))
+      return Result.ok(utils.bigNumberify(value))
     }
   } catch {} // tslint:disable-line
-  return Either.left([{ path, expected: 'big number' }])
+  return Result.error([{ path, expected: 'big number' }])
 }

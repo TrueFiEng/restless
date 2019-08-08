@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@restless/sanitizers@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.1.0.tgz#7b1af5bbb15cabb3975b33a3539f04f295637f20"
-  integrity sha512-aMxomLCELnv115RMW4Xksn5By6WmVdqQK0GdZDa09sUdsHpoVP8/lyAtcAZY9amP91rEtkL7oksp3hrQ0pNftg==
+"@restless/sanitizers@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.0.tgz#f66ba872f8215a869fcf1290f5547c06b5a7eef5"
+  integrity sha512-b11WcVDC+xFn8p5uKhNwKv5La+L9+I4kjQDIyiWC4HIgwhcTtP5RT/7UJPjSpV+9k0Dr6BtVUnwEueS5kI3pZQ==
 
 "@types/chai@^4.1.7":
   version "4.1.7"
