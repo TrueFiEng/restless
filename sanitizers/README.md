@@ -24,6 +24,7 @@ yarn add @restless/sanitizers
 - [`cast`](#cast)
 - [`asString`](#asstring)
 - [`asNumber`](#assumber)
+- [`asInteger`](#asinteger)
 - [`asBoolean`](#asboolean)
 - [`asMatching`](#asmatching)
 - [`asObject`](#asobject)
@@ -62,6 +63,17 @@ asNumber(123, 'path') // Result.ok(123)
 asNumber('0.2', 'path') // Result.ok(0.2)
 asNumber('boo', 'path') // Result.error([{expected: 'number', path: 'path'}])
 asNumber({}, 'path') // Result.error([{expected: 'number', path: 'path'}])
+```
+
+### `asInteger`
+
+Same as [`asNumber`](#asnumber), but does not accept floating point values.
+
+```javascript
+asInteger('123', 'path') // Result.ok(123)
+asInteger(0.2, 'path') // Result.error([{expected: 'integer', path: 'path'}])
+asInteger('boo', 'path') // Result.error([{expected: 'integer', path: 'path'}])
+asInteger({}, 'path') // Result.error([{expected: 'integer', path: 'path'}])
 ```
 
 ### `asBoolean`
