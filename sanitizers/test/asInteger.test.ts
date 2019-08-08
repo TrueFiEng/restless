@@ -19,6 +19,11 @@ describe('asInteger', () => {
     expect(result).to.deep.equal(Result.ok(123))
   })
 
+  it('sanitizes negative integers', async () => {
+    const result = asInteger(-123, '')
+    expect(result).to.deep.equal(Result.ok(-123))
+  })
+
   it('does not accept floating point values', async () => {
     const result = asInteger(123.45, 'path')
     expect(result).to.deep.equal(
