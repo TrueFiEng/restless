@@ -1,23 +1,23 @@
-import { Either, Sanitizer, SanitizerFailure, Schema } from './model'
+import { Result, Sanitizer, SanitizerFailure, Schema } from './model'
 
 export const asObject = <T extends object> (schema: Schema<T>): Sanitizer<T> =>
   (value, path) => {
     if (typeof value !== 'object' || value === null) {
-      return Either.left([{ path, expected: 'object' }])
+      return Result.error([{ path, expected: 'object' }])
     }
     const results: T = {} as any
     const errors: SanitizerFailure[] = []
     for (const key in schema) {
       if (Object.hasOwnProperty.call(schema, key)) {
         const result = schema[key]((value as T)[key], `${path}.${key}`)
-        if (Either.isRight(result)) {
-          results[key] = result.right
+        if (Result.isOk(result)) {
+          results[key] = result.ok
         } else {
-          errors.push(...result.left)
+          errors.push(...result.error)
         }
       }
     }
     return errors.length > 0
-      ? Either.left(errors)
-      : Either.right(results)
+      ? Result.error(errors)
+      : Result.ok(results)
   }

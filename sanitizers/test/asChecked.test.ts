@@ -1,18 +1,18 @@
 import { expect } from 'chai'
-import { asChecked, asString, Either } from '../src'
+import { asChecked, asString, Result } from '../src'
 
 describe('asChecked', () => {
   it('sanitizes using the nested sanitizer', async () => {
     const asCheckedString = asChecked(asString, (x) => x !== '')
     const result = asCheckedString('abc', '')
-    expect(result).to.deep.equal(Either.right('abc'))
+    expect(result).to.deep.equal(Result.ok('abc'))
   })
 
   it('returns nested sanitizer errors', async () => {
     const asCheckedString = asChecked(asString, (x) => x !== '')
     const result = asCheckedString(false, 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'string' }])
+      Result.error([{ path: 'path', expected: 'string' }])
     )
   })
 
@@ -20,7 +20,7 @@ describe('asChecked', () => {
     const asCheckedString = asChecked(asString, (x) => x !== '')
     const result = asCheckedString('', 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'custom logic' }])
+      Result.error([{ path: 'path', expected: 'custom logic' }])
     )
   })
 
@@ -28,7 +28,7 @@ describe('asChecked', () => {
     const asCheckedString = asChecked(asString, (x) => x !== '', 'non-empty string')
     const result = asCheckedString('', 'path')
     expect(result).to.deep.equal(
-      Either.left([{ path: 'path', expected: 'non-empty string' }])
+      Result.error([{ path: 'path', expected: 'non-empty string' }])
     )
   })
 })
