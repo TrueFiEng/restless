@@ -18,7 +18,8 @@ Express.js api, validations and more.
 
 ```javascript
 import express from 'express'
-import { asyncHandler, responseOf, sanitize, asString } from '@restless/restless'
+import { asyncHandler, responseOf, sanitize } from '@restless/restless'
+import { asNumber } from '@restless/sanitizers'
 
 const app = express()
 app.get('/add/:a/:b', asyncHandler(
@@ -51,7 +52,6 @@ yarn add @restless/restless
 - [`responseOfBuffer`](#responseofbuffer)
 - [`sanitize`](#sanitize)
 - [`SanitizeError`](#sanitizeerror)
-- All of the [@restless/sanitizers](https://github.com/EthWorks/restless/tree/master/sanitizers) library
 
 ### `asyncHandler`
 
@@ -120,7 +120,8 @@ The `sanitize` function is a transformer. It transforms the request into an obje
 Example:
 ```javascript
 import express from 'express'
-import { asyncHandler, responseOf, asObject, asNumber } from '@restless/restless'
+import { asyncHandler, responseOf, sanitize } from '@restless/restless'
+import { asObject, asNumber } from '@restless/sanitizers'
 
 const app = express()
 app.get('/:foo', asyncHandler(

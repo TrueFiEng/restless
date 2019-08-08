@@ -1,6 +1,6 @@
 {
   "name": "@restless/restless",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
   "license": "Unlicense",
@@ -30,7 +30,7 @@
     "lint": "tslint --project tsconfig.json \"src/**/*.ts\" \"test/**/*.ts\""
   },
   "dependencies": {
-    "@restless/sanitizers": "^0.1.0",
+    "@restless/sanitizers": "^0.2.0",
     "@types/express": "^4.16.0",
     "express": "^4.16.0"
   },
