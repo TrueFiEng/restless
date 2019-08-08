@@ -1,4 +1,4 @@
-import { Either, SanitizerFailure, Schema, SchemaResult } from '@restless/sanitizers'
+import { Result, SanitizerFailure, Schema, SchemaResult } from '@restless/sanitizers'
 import { Request } from 'express'
 
 export class SanitizeError extends Error {
@@ -22,10 +22,10 @@ export const sanitize = <S extends Schema<any>>(schema: S) =>
         } else {
           result = schema[key](req.params[key], `params.${key}`)
         }
-        if (Either.isRight(result)) {
-          sanitized[key] = result.right
+        if (Result.isOk(result)) {
+          sanitized[key] = result.ok
         } else {
-          errors.push(...result.left)
+          errors.push(...result.error)
         }
       }
     }
