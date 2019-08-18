@@ -14,14 +14,10 @@ export const sanitize = <S extends Schema<any>>(schema: S) =>
     const errors: SanitizerFailure[] = []
     for (const key in schema) {
       if (Object.hasOwnProperty.call(schema, key)) {
-        let result
-        if (key === 'body') {
-          result = schema[key](req.body, 'body')
-        } else if (key === 'query') {
-          result = schema[key](req.query, 'query')
-        } else {
-          result = schema[key](req.params[key], `params.${key}`)
-        }
+        const result = req.params[key] !== undefined
+          ? schema[key](req.params[key], `params.${key}`)
+          : schema[key]((req as any)[key], key)
+
         if (Result.isOk(result)) {
           sanitized[key] = result.ok
         } else {

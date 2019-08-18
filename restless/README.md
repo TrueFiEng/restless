@@ -113,7 +113,9 @@ This library exports all sanitizers from the [@restless/sanitizers](https://gith
 
 ### `sanitize`
 
-The `sanitize` function is a transformer. It transforms the request into an object that matches a schema you provide. The keys in the provided schema correspond to the url parameters with the exception of `body` and `query` which correspond to the request body and parsed query string respectively.
+The `sanitize` function is a transformer. It transforms the request into an object that matches a schema you provide.
+
+The keys in the provided schema correspond to the url parameters or the values on the request object from express. This means that if you try to sanitize a request to `/users/:id` calling `sanitize({ id: ..., body: ... })` will check the `req.params.id` and `req.body`.
 
 `sanitize` returns a function that is to be passed to `asyncHandler`.
 
