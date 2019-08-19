@@ -1,6 +1,6 @@
 {
   "name": "@restless/sanitizers",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Data sanitization in a functional way",
   "license": "Unlicense",
