@@ -26,7 +26,8 @@ yarn add @restless/restless
 ## Packages
 
 Included packages:
-* [`restless`](https://github.com/EthWorks/restless/tree/master/restless) - core package
+* [`restless`](https://github.com/EthWorks/restless/tree/master/restless) - express.js middleware for request validation
+* [`sanitizers`](https://github.com/EthWorks/restless/tree/master/sanitizers) - sanitizers used for data validation
 * [`ethereum`](https://github.com/EthWorks/restless/tree/master/ethereum) - ethereum utilities
 
 ## Documentation
