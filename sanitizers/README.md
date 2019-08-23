@@ -78,7 +78,7 @@ asInteger({}, 'path') // Result.error([{expected: 'integer', path: 'path'}])
 
 ### `asBoolean`
 
-Accepts any value that is a number or a string that represents a boolean (`"true"` or `"false"`). Returns a number.
+Accepts any value that is a number or a string that represents a boolean (`"true"` or `"false"`). Returns boolean.
 
 ```javascript
 asBoolean(true, 'path') // Result.ok(true)
@@ -101,7 +101,7 @@ sanitizer('b', 'path') // Result.error([{expected: 'custom message', path: 'path
 
 ### `asObject`
 
-This higher-order sanitizer requires a schema in the form of an object. Values of the schema are sanitizers used to sanitize the values of the input. Returns an object with keys and values matching the schema.
+This higher-order sanitizer requires a schema in the form of an object. Values of the schema are sanitizers used to sanitize the values of the input. Unexpected keys are removed. Returns an object with keys and values matching the schema.
 
 ```javascript
 const sanitizer = asObject({ foo: asNumber, bar: asString })
@@ -113,7 +113,24 @@ sanitizer({}, 'path')
 //   {expected: 'number', path: 'path.foo'},
 //   {expected: 'string', path: 'path.bar'}
 // ])
-sanitizer({ foo: true, bar: 'a' , 'path') // Result.error([{expected: 'number', path: 'path.foo'}])
+sanitizer({ foo: true, bar: 'a' }, 'path') // Result.error([{expected: 'number', path: 'path.foo'}])
+```
+
+### `asExactObject`
+
+Similar to [`asObject`](#asobject), but does not accept unexpected keys.
+
+```javascript
+const sanitizer = asExactObject({ foo: asNumber, bar: asString })
+
+sanitizer({ foo: 1, bar: 'a' }, 'path') // Result.ok({ foo: 1, bar: 'a' })
+sanitizer(123, 'path') // Result.error([{expected: 'object', path: 'path'}])
+sanitizer({}, 'path')
+// Result.error([
+//   {expected: 'number', path: 'path.foo'},
+//   {expected: 'string', path: 'path.bar'}
+// ])
+sanitizer({ foo: 1, bar: 'a', baz: true }, 'path') // Result.error([{expected: 'absent', path: 'path.baz'}])
 ```
 
 ### `asArray`
