@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { asExactly, Result, Sanitizer } from '../src'
+import { asExactly, asObject, cast, Result, Sanitizer } from '../src'
 
 describe('asExactly', () => {
   it('succeeds for exactly matching values', async () => {
@@ -36,5 +36,13 @@ describe('asExactly', () => {
     const sanitizer: Sanitizer<'foo'> = asExactly('foo')
     const result = sanitizer(0, 'path')
     expect(result).to.deep.equal(Result.error([{ path: 'path', expected: 'exactly "foo"' }]))
+  })
+
+  it('works as a part of a data model', async () => {
+    const asFoo = asObject({
+      type: asExactly('foo')
+    })
+    const value = cast({ type: 'foo' }, asFoo)
+    const type: 'foo' = value.type
   })
 })
