@@ -45,6 +45,16 @@ cast('123', asNumber) // 123
 cast('foo', asNumber) // TypeError
 ```
 
+### `castOr`
+
+Accepts a value and applies a sanitizer to it resulting in returning the sanitized value or the default value.
+Also works when values have different types.
+
+```javascript
+castOr('123', asNumber, null) // 123
+castOr('foo', asNumber, null) // null
+```
+
 ### `asString`
 
 Accepts any value that is a string. Returns a string.
