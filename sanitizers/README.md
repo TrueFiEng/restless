@@ -157,6 +157,12 @@ const sanitizer = asChecked(asString, x => x.length > 3, 'string longer than 3')
 sanitizer('a', 'path') // Result.error([{expected: 'string longer than 3', path: 'path'}])
 ```
 
+It also works with type guards in the same way as `Array.filter`:
+
+```typescript
+const asFoo: Sanitizer<'foo'> = asChecked(asString, (x): x is 'foo' => x === 'foo')
+``` 
+
 ### `asMapped`
 
 This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function.
