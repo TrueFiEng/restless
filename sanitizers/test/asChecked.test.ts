@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { asChecked, asString, Result } from '../src'
+import { asChecked, asString, Result, Sanitizer, SanitizerFailure } from '../src'
 
 describe('asChecked', () => {
   it('sanitizes using the nested sanitizer', async () => {
@@ -30,5 +30,11 @@ describe('asChecked', () => {
     expect(result).to.deep.equal(
       Result.error([{ path: 'path', expected: 'non-empty string' }])
     )
+  })
+
+  it('works with type guards', async () => {
+    const asFoo: Sanitizer<'foo'> = asChecked(asString, (x): x is 'foo' => x === 'foo')
+    const result: Result<SanitizerFailure[], 'foo'> = asFoo('foo', 'path')
+    expect(result).to.deep.equal(Result.ok('foo'))
   })
 })
