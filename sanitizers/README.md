@@ -151,6 +151,18 @@ sanitizer(undefined, 'path') // Result.ok(undefined)
 sanitizer(123, 'path') // Result.error([{expected: 'string', path: 'path'}])
 ```
 
+### `asExactly`
+
+This higher-order sanitizer accepts only exactly the same values as the reference provided. Values are compared using the triple-equals operator (`===`).
+Works with strings, numbers, booleans, null, and undefined.
+
+```javascript
+const sanitizer = asExactly('foo')
+
+sanitizer('foo', 'path') // Result.ok('foo')
+sanitizer('bar', 'path') // Result.error([{expected: 'exactly "foo"', path: 'path'}])
+``` 
+
 ### `asChecked`
 
 This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument and satisfies the predicate passed as the second argument. A third argument that specifies an optional expected message can be provided
@@ -166,6 +178,12 @@ sanitizer('a', 'path') // Result.error([{expected: 'custom logic', path: 'path'}
 const sanitizer = asChecked(asString, x => x.length > 3, 'string longer than 3')
 sanitizer('a', 'path') // Result.error([{expected: 'string longer than 3', path: 'path'}])
 ```
+
+It also works with type guards in the same way as `Array.filter`:
+
+```typescript
+const asFoo: Sanitizer<'foo'> = asChecked(asString, (x): x is 'foo' => x === 'foo')
+``` 
 
 ### `asMapped`
 
