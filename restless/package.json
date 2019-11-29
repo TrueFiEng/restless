@@ -1,6 +1,6 @@
 {
   "name": "@restless/restless",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Express.js api, validations and more",
   "license": "Unlicense",

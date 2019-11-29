@@ -74,4 +74,27 @@ describe('sanitize', () => {
       { path: 'query.a', expected: 'string' }
     ])
   })
+
+  it('handles arbitrary request properties', async () => {
+    const app = makeApp('/:foo/:bar', sanitize({
+      foo: asNumber,
+      params: asObject({
+        bar: asString
+      }),
+      method: asString
+    }))
+
+    const response = await chai.request(app)
+      .post('/1/bar')
+      .send()
+
+    expect(response.status).to.equal(200)
+    expect(response.body).to.deep.equal({
+      foo: 1,
+      params: {
+        bar: 'bar'
+      },
+      method: 'POST'
+    })
+  })
 })
