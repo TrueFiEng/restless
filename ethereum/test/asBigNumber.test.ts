@@ -19,6 +19,12 @@ describe('asBigNumber', () => {
     expect(result).to.deep.equal(Result.ok(utils.bigNumberify(1234)))
   })
 
+  it('sanitizes bignumber', async () => {
+    const expectedBigNumber = utils.bigNumberify('1234')
+    const result = asBigNumber(expectedBigNumber, '')
+    expect(result).to.deep.equal(Result.ok(expectedBigNumber))
+  })
+
   it('does not accept non integers', async () => {
     const result = asBigNumber(1.234567, 'path')
     expect(result).to.deep.equal(
