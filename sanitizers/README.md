@@ -141,6 +141,18 @@ sanitizer(undefined, 'path') // Result.ok(undefined)
 sanitizer(123, 'path') // Result.error([{expected: 'string', path: 'path'}])
 ```
 
+### `asExactly`
+
+This higher-order sanitizer accepts only exactly the same values as the reference provided. Values are compared using the triple-equals operator (`===`).
+Works with strings, numbers, booleans, null, and undefined.
+
+```javascript
+const sanitizer = asExactly('foo')
+
+sanitizer('foo', 'path') // Result.ok('foo')
+sanitizer('bar', 'path') // Result.error([{expected: 'exactly "foo"', path: 'path'}])
+``` 
+
 ### `asChecked`
 
 This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument and satisfies the predicate passed as the second argument. A third argument that specifies an optional expected message can be provided
