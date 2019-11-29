@@ -45,3 +45,29 @@ asBigNumber(456, 'path') // Result.ok(BigNumber(456))
 asBigNumber(1.5, 'path') // Result.error([{expected: 'big number', path: 'path'}])
 asBigNumber(true, 'path') // Result.error([{expected: 'big number', path: 'path'}])
 ```
+
+### `asHexBytes`
+
+Accepts any string that encodes binary data of specific length in hex format. The returned string is always lowercased.
+
+```javascript
+const sanitizer = asHexBytes(3)
+
+sanitizer('0x12ab56', 'path') // Result.ok('0x12ab56')
+sanitizer('0x12AB56', 'path') // Result.ok('0x12ab56')
+sanitizer('0x12AB5', 'path') // Result.error([{expected: 'hex string representing 3 bytes', path: 'path'}])
+sanitizer(1234, 'path') // Result.error([{expected: 'hex string representing 3 bytes', path: 'path'}])
+```
+
+### `asTransactionHash`
+
+Accepts any string that can be a transaction hash.
+
+```javascript
+const exampleHash = '0xd04b98f48e8f8bcc15c6ae5ac050801cd6dcfd428fb5f9e65c4e16e7807340fa'
+
+asTransactionHash(exampleHash, 'path') // Result.ok('0xd04b...40fa')
+asTransactionHash(exampleHash.toUpperCase(), 'path') // Result.ok('0xd04b...40fa')
+sanitizer('0x12AB5', 'path') // Result.error([{expected: 'transaction hash', path: 'path'}])
+sanitizer(1234, 'path') // Result.error([{expected: 'transaction hash', path: 'path'}])
+```
