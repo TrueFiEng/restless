@@ -74,6 +74,22 @@ We thank you for all the contributions:
     title="Przemysław Rząd"
   />
 </a>
+<a href="https://github.com/xitronix">
+  <img
+    src="https://avatars3.githubusercontent.com/u/18648454?s=400&v=4"
+    width="64px"
+    alt="Jarosław Steckiewicz"
+    title="Jarosław Steckiewicz"
+  />
+</a>
+<a href="https://github.com/vanruch">
+  <img
+    src="https://avatars3.githubusercontent.com/u/1541274?s=400&v=4"
+    width="64px"
+    alt="Ivan Rukhavets"
+    title="Ivan Rukhavets"
+  />
+</a>
 <!-- ALL-CONTRIBUTORS-LIST:END - Do not remove or modify this section -->
 
 ## Changelog
