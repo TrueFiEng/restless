@@ -202,7 +202,7 @@ sanitizer('a', 'path') // Result.error([{expected: 'number', path: 'path'}])
 This higher-order sanitizer accepts any value that is sanitized through the sanitizer passed as argument. That value is then transformed using the provided function that can return Result a new value or an error.
 
 ```javascript
-const sanitizer = asMapped(asNumber, (value, path) => x > 1
+const sanitizer = asFlatMapped(asNumber, (value, path) => x > 1
   ? Result.ok(value)
   : Result.error([{ path, expected: 'number > 1' }])
 )
