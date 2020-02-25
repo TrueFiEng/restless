@@ -1,3 +1,4 @@
+export { asPartialObject } from './asPartialObject'
 export { asAnyOf } from './asAnyOf'
 export { asArray } from './asArray'
 export { asBoolean } from './asBoolean'
