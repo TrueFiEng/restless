@@ -11,7 +11,7 @@ describe('asEnum', () => {
   })
 
   it('enum with number + string', () => {
-    const sanitizer: Sanitizer<'foo' | 23> = asEnum(['foo', 23], 'enum')
+    const sanitizer = asEnum(['foo', 23], 'enum')
     expect(sanitizer('foo', '')).to.deep.eq(Result.ok('foo'))
     expect(sanitizer(23, '')).to.deep.eq(Result.ok(23))
     expect(sanitizer('baz', '')).to.deep.eq(Result.error([{ path: '', expected: 'enum' }]))
