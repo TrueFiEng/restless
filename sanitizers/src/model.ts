@@ -20,3 +20,7 @@ export type Schema<T> = {
 export type SchemaResult<S> = {
   [K in keyof S]: S[K] extends Sanitizer<infer T> ? T : never
 }
+
+export type NonEmptyArray<T> = [T, ...T[]]
+
+export type LiteralTypes = string | number | boolean | null | undefined
