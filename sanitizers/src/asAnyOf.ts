@@ -1,6 +1,4 @@
-import { Result, Sanitizer, Schema } from './model'
-
-type NonEmptyArray<T> = [T, ...T[]]
+import { NonEmptyArray, Result, Sanitizer, Schema } from './model'
 
 interface AsAnyOf {
   <A> (sanitizers: Schema<[A]>, expected: string): Sanitizer<A>

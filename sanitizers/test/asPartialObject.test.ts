@@ -1,15 +1,15 @@
 import { expect } from 'chai'
-import { asNumber, asObject, asOptional, asString, Result } from '../src'
+import { asNumber, asObject, asOptional, asPartialObject, asString, Result } from '../src'
 
-describe('asObject', () => {
+describe('asPartialObject', () => {
   it('sanitizes objects', async () => {
-    const asMyObject = asObject({})
+    const asMyObject = asPartialObject({})
     const result = asMyObject({}, '')
     expect(result).to.deep.equal(Result.ok({}))
   })
 
   it('does not-accept non-objects', async () => {
-    const asMyObject = asObject({})
+    const asMyObject = asPartialObject({})
     const result = asMyObject(123, 'path')
     expect(result).to.deep.equal(
       Result.error([{ path: 'path', expected: 'object' }])
@@ -17,9 +17,9 @@ describe('asObject', () => {
   })
 
   it('sanitizes using nested sanitizers', async () => {
-    const asMyObject = asObject({
+    const asMyObject = asPartialObject({
       foo: asNumber,
-      bar: asObject({
+      bar: asPartialObject({
         baz: asString
       })
     })
@@ -29,13 +29,13 @@ describe('asObject', () => {
   })
 
   it('removes unknown properties', async () => {
-    const asMyObject = asObject({ x: asNumber })
+    const asMyObject = asPartialObject({ x: asNumber })
     const result = asMyObject({ x: 1, y: 'foo' }, 'path')
     expect(result).to.deep.equal(Result.ok({ x: 1 }))
   })
 
   it('returns errors from nested sanitizers', async () => {
-    const asMyObject = asObject({
+    const asMyObject = asPartialObject({
       foo: asNumber,
       bar: asObject({
         baz: asString
@@ -49,12 +49,21 @@ describe('asObject', () => {
     ]))
   })
 
-  it('adds undefined for missing optional keys', async () => {
-    const asMyObject = asObject({
-      foo: asOptional(asNumber)
+  it('omits missing fields', async () => {
+    const asMyObject = asPartialObject({
+      x: asNumber,
+      y: asNumber
     })
-    const value = { }
-    const result = asMyObject(value, 'path')
-    expect(result).to.deep.equal(Result.ok({ foo: undefined }))
+    const result = asMyObject({ x: 1, z: 'foo' }, 'path')
+    expect(result).to.deep.equal(Result.ok({ x: 1 }))
+  })
+
+  it('keeps fields that are undefined', async () => {
+    const asMyObject = asPartialObject({
+      x: asNumber,
+      y: asOptional(asNumber)
+    })
+    const result = asMyObject({ x: 1, y: undefined, z: 'foo' }, 'path')
+    expect(result).to.deep.equal(Result.ok({ x: 1, y: undefined }))
   })
 })

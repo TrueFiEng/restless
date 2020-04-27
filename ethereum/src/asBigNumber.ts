@@ -3,7 +3,9 @@ import { utils } from 'ethers'
 
 export const asBigNumber: Sanitizer<utils.BigNumber> = (value, path) => {
   try {
-    if (typeof value === 'string' || typeof value === 'number') {
+    if (utils.BigNumber.isBigNumber(value)) {
+      return Result.ok(value)
+    } else if (typeof value === 'string' || typeof value === 'number') {
       return Result.ok(utils.bigNumberify(value))
     }
   } catch {} // tslint:disable-line
