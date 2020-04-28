@@ -28,7 +28,7 @@ describe('asyncHandler', () => {
   it('accepts multiple functions that connect as a pipe', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      (_, req) => req.params.foo as string,
+      (_, req) => req.params.foo,
       (foo) => parseInt(foo, 10),
       (value) => responseOf(value)
     ))
@@ -44,7 +44,7 @@ describe('asyncHandler', () => {
   it('handles async functions', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      async (_, req) => req.params.foo as string,
+      async (_, req) => req.params.foo,
       (foo) => parseInt(foo, 10),
       (value) => Promise.resolve(responseOf(value))
     ))
@@ -60,7 +60,7 @@ describe('asyncHandler', () => {
   it('passes request to every function', async () => {
     const app = express()
     app.get('/:foo', asyncHandler(
-      (_, req) => req.params.foo as string,
+      (_, req) => req.params.foo,
       (foo, req) => req.params.foo + foo,
       (foo2, req) => responseOf({ foo: req.params.foo, foo2 })
     ))

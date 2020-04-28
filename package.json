@@ -1,0 +1,22 @@
+{
+  "name": "restless-monorepo",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": "^11.15.0",
+    "yarn": ">=1.15.2"
+  },
+  "scripts": {
+    "lint": "wsrun -c lint",
+    "build": "wsrun -te -c build",
+    "test": "wsrun -c test"
+  },
+  "workspaces": [
+    "ethereum",
+    "restless",
+    "sanitizers"
+  ],
+  "devDependencies": {
+    "wsrun": "^5.2.0"
+  }
+}

@@ -1,5 +1,5 @@
 import { asNumber, asObject, asString } from '@restless/sanitizers'
-import bodyParser from 'body-parser'
+import { json } from 'body-parser'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import express, { ErrorRequestHandler, Request } from 'express'
@@ -20,7 +20,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 describe('sanitize', () => {
   function makeApp (path: string, middleware: (data: any, req: Request) => any) {
     const app = express()
-    app.use(bodyParser.json())
+    app.use(json())
     app.post(path, asyncHandler(
       middleware,
       (x) => responseOf(x)
