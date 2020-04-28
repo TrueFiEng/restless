@@ -14,7 +14,7 @@ export const sanitize = <S extends Schema<any>>(schema: S) =>
     const errors: SanitizerFailure[] = []
     for (const key in schema) {
       if (Object.hasOwnProperty.call(schema, key)) {
-        const result = req.params[key] !== undefined
+        const result = req.params[key] !== undefined // tslint:disable-line
           ? schema[key](req.params[key], `params.${key}`)
           : schema[key]((req as any)[key], key)
 
