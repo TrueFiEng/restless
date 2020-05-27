@@ -30,7 +30,7 @@
     "lint": "tslint --project tsconfig.json \"src/**/*.ts\" \"test/**/*.ts\""
   },
   "dependencies": {
-    "@restless/sanitizers": "^0.2.0",
+    "@restless/sanitizers": "^0.2.5",
     "@types/express": "^4.16.0",
     "express": "^4.16.0"
   },
