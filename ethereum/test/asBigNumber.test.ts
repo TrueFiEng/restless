@@ -1,26 +1,26 @@
 import { Result } from '@restless/sanitizers'
 import { expect } from 'chai'
-import { utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import { asBigNumber } from '../src/asBigNumber'
 
 describe('asBigNumber', () => {
   it('sanitizes strings that are valid big numbers', async () => {
     const result = asBigNumber('1234', '')
-    expect(result).to.deep.equal(Result.ok(utils.bigNumberify('1234')))
+    expect(result).to.deep.equal(Result.ok(BigNumber.from('1234')))
   })
 
   it('sanitizes hex strings that are valid big numbers', async () => {
     const result = asBigNumber('0xaBf3', '')
-    expect(result).to.deep.equal(Result.ok(utils.bigNumberify('0xaBf3')))
+    expect(result).to.deep.equal(Result.ok(BigNumber.from('0xaBf3')))
   })
 
   it('sanitizes numbers', async () => {
     const result = asBigNumber(1234, '')
-    expect(result).to.deep.equal(Result.ok(utils.bigNumberify(1234)))
+    expect(result).to.deep.equal(Result.ok(BigNumber.from(1234)))
   })
 
   it('sanitizes bignumber', async () => {
-    const expectedBigNumber = utils.bigNumberify('1234')
+    const expectedBigNumber = BigNumber.from('1234')
     const result = asBigNumber(expectedBigNumber, '')
     expect(result).to.deep.equal(Result.ok(expectedBigNumber))
   })

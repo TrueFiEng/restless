@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@restless/sanitizers": "^0.2.0",
-    "ethers": "^4.0.0"
+    "ethers": "^5.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
