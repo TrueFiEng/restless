@@ -1,6 +1,6 @@
 {
   "name": "@restless/ethereum",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "description": "Ethereum utilities for restless",
   "license": "Unlicense",
